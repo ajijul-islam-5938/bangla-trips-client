@@ -35,12 +35,12 @@ import Swal from "sweetalert2";
 
 function NavList() {
   return (
-    <List className="mt-4 mb-6 p-0 lg:mt-0 lg:mb-0 lg:flex-row lg:p-1">
+    <List className="mt-4 mb-6 p-0 lg:mt-0 lg:mb-0 lg:flex-row lg:p-1 text-white">
       <Typography
         as={NavLink}
         to="/"
         variant="small"
-        color="blue-gray"
+        // color="blue-gray"
         className="font-medium"
       >
         <ListItem className="flex items-center gap-2 py-2 pr-4">Home</ListItem>
@@ -49,7 +49,7 @@ function NavList() {
         as={NavLink}
         to="/community"
         variant="small"
-        color="blue-gray"
+        // color="blue-gray"
         className="font-medium"
       >
         <ListItem className="flex items-center gap-2 py-2 pr-4">
@@ -60,7 +60,7 @@ function NavList() {
         as={NavLink}
         to="/blogs"
         variant="small"
-        color="blue-gray"
+        // color="blue-gray"
         className="font-medium"
       >
         <ListItem className="flex items-center gap-2 py-2 pr-4">Blogs</ListItem>
@@ -69,7 +69,7 @@ function NavList() {
         as={NavLink}
         to="/about-us"
         variant="small"
-        color="blue-gray"
+        // color="blue-gray"
         className="font-medium"
       >
         <ListItem className="flex items-center gap-2 py-2 pr-4">
@@ -80,7 +80,7 @@ function NavList() {
         as={NavLink}
         to="/contact-us"
         variant="small"
-        color="blue-gray"
+        // color="blue-gray"
         className="font-medium"
       >
         <ListItem className="flex items-center gap-2 py-2 pr-4">
@@ -127,34 +127,29 @@ export default function NavBar() {
 
   const profileMenuItems = [
     {
-      label: "My Profile",
+      label: "Dashboard",
+      to : "/dashboard",
       icon: UserCircleIcon,
     },
     {
-      label: "Edit Profile",
+      label: " Offer Announcements",
       icon: Cog6ToothIcon,
-    },
-    {
-      label: "Inbox",
-      icon: InboxArrowDownIcon,
-    },
-    {
-      label: "Help",
-      icon: LifebuoyIcon,
+      to : "/offer-announcements"
     },
     {
       label: <Typography onClick={handleLogout}>Logout</Typography>,
       icon: PowerIcon,
+      
     },
   ];
   return (
-    <Navbar className="fixed z-[999] top-0 left-0 right-0 mx-auto w-full px-4 py-2">
+    <Navbar className="fixed bg-[rgba(0,0,0,0.1)] shadow-none backdrop-blur w-full border-none rounded-none z-[999] top-0 left-0 right-0 mx-auto  px-4 py-2">
       <div className="flex items-center justify-between text-blue-gray-900">
         <Typography
           as={Link}
           to="/"
           variant="h6"
-          className="mr-4 cursor-pointer py-1.5 lg:ml-2"
+          className="mr-4 cursor-pointer py-1.5 lg:ml-2 text-white"
         >
           BanglaTrips
         </Typography>
@@ -167,7 +162,7 @@ export default function NavBar() {
               <MenuHandler>
                 <Button
                   variant="text"
-                  color="blue-gray"
+                  // color="blue-gray"
                   className="flex items-center gap-1 rounded-full py-0.5 pr-2 pl-0.5 lg:ml-auto"
                 >
                   <Avatar
@@ -185,7 +180,7 @@ export default function NavBar() {
                   />
                 </Button>
               </MenuHandler>
-              <MenuList className="p-5">
+              <MenuList className="px-5">
                 <div
                   className="text-center font-semibold space-y-2 my-5"
                   aria-readonly
@@ -194,33 +189,36 @@ export default function NavBar() {
                   <p>{user.email}</p>
                 </div>
                 <Divider />
-                {profileMenuItems.map(({ label, icon }, key) => {
+                {profileMenuItems.map(({ label,to, icon }, key) => {
                   const isLastItem = key === profileMenuItems.length - 1;
                   return (
-                    <MenuItem
+                    <Typography
+                      as={NavLink}
+                      to={to}
                       key={label}
                       onClick={closeMenu}
-                      className={`flex items-center gap-2 rounded ${
+
+                      className={`flex items-center gap-2 px-5 py-2 my-2 rounded ${
                         isLastItem
-                          ? "hover:bg-red-500/10 focus:bg-red-500/10 active:bg-red-500/10"
+                          ? "hover:bg-red-500/10 focus:bg-red-500/10 active:bg-red-500/10 text-white"
                           : ""
                       }`}
                     >
                       {React.createElement(icon, {
-                        className: `h-4 w-4 ${
-                          isLastItem ? "text-red-500" : ""
+                        className: `h-4 w-4  ${
+                          isLastItem ? "text-white" : ""
                         }`,
                         strokeWidth: 2,
                       })}
                       <Typography
                         as="span"
                         variant="small"
-                        className="font-normal"
-                        color={isLastItem ? "red" : "inherit"}
+                        className="font-normal "
+                        color={isLastItem ? "#fff" : "inherit"}
                       >
                         {label}
                       </Typography>
-                    </MenuItem>
+                    </Typography>
                   );
                 })}
               </MenuList>
@@ -243,7 +241,7 @@ export default function NavBar() {
         </div>
         <IconButton
           variant="text"
-          color="blue-gray"
+          // color="blue-gray"
           className="lg:hidden"
           onClick={() => setOpenNav(!openNav)}
         >
@@ -256,14 +254,15 @@ export default function NavBar() {
       </div>
       <Collapse open={openNav}>
         <NavList />
-        <div className="flex w-full flex-nowrap items-center gap-2 lg:hidden">
-          <Button variant="outlined" size="sm" color="blue-gray" fullWidth>
-            Log In
-          </Button>
-          <Button variant="gradient" size="sm" fullWidth>
-            Sign In
-          </Button>
-        </div>
+        {!user && (
+          <div className="grid w-full items-center gap-2 lg:hidden">
+            <Typography as={Link} to="/sign-in" fullWidth>
+              <Button variant="gradient" size="sm" fullWidth>
+                Sign In
+              </Button>
+            </Typography>
+          </div>
+        )}
       </Collapse>
     </Navbar>
   );

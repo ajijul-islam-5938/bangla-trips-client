@@ -34,7 +34,7 @@ const SignIN = () => {
           });
     }
   return (
-    <div className="flex justify-center items-center h-screen">
+    <div className="flex justify-center items-center h-full">
       <div className="grid grid-cols-1 md:grid-cols-2 items-center justify-center">
         <div className=" hidden md:block">
           <img src={loginImg} alt="" />
