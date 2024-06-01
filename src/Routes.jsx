@@ -5,6 +5,8 @@ import Community from "./Pages/Community/Community/Community";
 import Blogs from "./Pages/Blogs/Blogs/Blogs";
 import About from "./Pages/About/About/About";
 import Contact from "./Pages/Contact/Contact/Contact";
+import SignIN from "./Pages/SignIn/SignIN";
+import SignUp from "./Pages/SignUp/SignUp";
 
 const router = createBrowserRouter([
   {
@@ -30,6 +32,14 @@ const router = createBrowserRouter([
         {
             path : "/contact-us",
             element : <Contact/>
+        },
+        {
+            path : "/sign-in",
+            element : <SignIN/>
+        },
+        {
+            path : "/sign-up",
+            element : <SignUp/>
         }
     ]
   },
