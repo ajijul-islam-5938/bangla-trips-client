@@ -13,8 +13,14 @@ import { Link } from "react-router-dom";
 import { useContext } from "react";
 import { AuthContext } from "../../Provider/AuthProvider";
 import Swal from "sweetalert2";
+import useAxios from "../../Hooks/useAxios";
+import useAuth from "../../Hooks/useAuth";
+
 const SignIN = () => {
   const { googleLogin, signInWithEmailPassword } = useContext(AuthContext);
+
+  const { axiosPublic } = useAxios();
+  const user = useAuth();
 
   const handleGoogleLogin = () => {
     googleLogin()
@@ -24,6 +30,13 @@ const SignIN = () => {
           title: "Success!!",
           text: "Logged In",
         });
+
+        const userInfo = {
+          email: res.user.email,
+          name: res.user.displayName,
+        };
+
+        axiosPublic.post(`/user`, userInfo);
       })
       .catch(err => {
         Swal.fire({

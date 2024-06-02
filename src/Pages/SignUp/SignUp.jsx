@@ -15,8 +15,12 @@ import { AuthContext } from "../../Provider/AuthProvider";
 import Swal from "sweetalert2";
 import { updateProfile } from "firebase/auth";
 import Auth from "../../firebase.config";
+import useAxios from "../../Hooks/useAxios";
+
 const SignUp = () => {
-  const { googleLogin, createUserWithEmailPassword,user } = useContext(AuthContext);
+  const { axiosPublic } = useAxios();
+  const { googleLogin, createUserWithEmailPassword, user } =
+    useContext(AuthContext);
 
   const handleGoogleLogin = () => {
     googleLogin()
@@ -26,6 +30,13 @@ const SignUp = () => {
           title: "Success!!",
           text: "Logged In",
         });
+
+        const userInfo = {
+          email: res.user.email,
+          name: res.user.displayName,
+        };
+
+        axiosPublic.post(`/user`, userInfo);
       })
       .catch(err => {
         console.log(err);
@@ -43,27 +54,35 @@ const SignUp = () => {
     const email = event.target.email.value;
     const photoUrl = event.target.photoUrl.value;
     const password = event.target.password.value;
-    createUserWithEmailPassword(email,password)
+
+    createUserWithEmailPassword(email, password)
       .then(res => {
-        updateProfile(Auth.currentUser,{
-          displayName : name,
-          photoURL : photoUrl
+        updateProfile(Auth.currentUser, {
+          displayName: name,
+          photoURL: photoUrl,
         })
-        .then(res => {
-          console.log(res);
-          Swal.fire({
-            icon: "success",
-            title: "Success!!",
-            text: "Created Successfully",
+          .then(res => {
+            console.log(res);
+            Swal.fire({
+              icon: "success",
+              title: "Success!!",
+              text: "Created Successfully",
+            });
+            const userInfo = {
+              email: Auth.currentUser.email,
+              name: Auth.currentUser.displayName,
+            };
+
+            axiosPublic.post(`/user`, userInfo);
+          })
+          .catch(err => {
+            Swal.fire({
+              icon: "error",
+              title: "Oops...",
+              text: err.message,
+            });
+            console.log(err);
           });
-        })
-        .catch(err => {
-          Swal.fire({
-            icon: "error",
-            title: "Oops...",
-            text: err.message,
-          });
-        });
       })
       .catch(err => {
         Swal.fire({
