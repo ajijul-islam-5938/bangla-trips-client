@@ -125,23 +125,6 @@ export default function NavBar() {
       });
   };
 
-  const profileMenuItems = [
-    {
-      label: "Dashboard",
-      to : "/dashboard",
-      icon: UserCircleIcon,
-    },
-    {
-      label: " Offer Announcements",
-      icon: Cog6ToothIcon,
-      to : "/offer-announcements"
-    },
-    {
-      label: <Typography onClick={handleLogout}>Logout</Typography>,
-      icon: PowerIcon,
-      
-    },
-  ];
   return (
     <Navbar className="fixed bg-[rgba(0,0,0,0.1)] shadow-none backdrop-blur w-full border-none rounded-none z-[999] top-0 left-0 right-0 mx-auto  px-4 py-2">
       <div className="flex items-center justify-between text-blue-gray-900">
@@ -189,38 +172,36 @@ export default function NavBar() {
                   <p>{user.email}</p>
                 </div>
                 <Divider />
-                {profileMenuItems.map(({ label,to, icon }, key) => {
-                  const isLastItem = key === profileMenuItems.length - 1;
-                  return (
-                    <Typography
-                      as={NavLink}
-                      to={to}
-                      key={label}
-                      onClick={closeMenu}
-
-                      className={`flex items-center gap-2 px-5 py-2 my-2 rounded ${
-                        isLastItem
-                          ? "hover:bg-red-500/10 focus:bg-red-500/10 active:bg-red-500/10 text-white"
-                          : ""
-                      }`}
-                    >
-                      {React.createElement(icon, {
-                        className: `h-4 w-4  ${
-                          isLastItem ? "text-white" : ""
-                        }`,
-                        strokeWidth: 2,
-                      })}
-                      <Typography
-                        as="span"
-                        variant="small"
-                        className="font-normal "
-                        color={isLastItem ? "#fff" : "inherit"}
-                      >
-                        {label}
-                      </Typography>
-                    </Typography>
-                  );
-                })}
+                <List className="">
+                  <Typography
+                    as={NavLink}
+                    to="/dashboard"
+                    variant="small"
+                    // color="blue-gray"
+                    className="font-medium px-5rounded "
+                  >
+                    <ListItem className="flex items-center gap-2 py-2 pr-4">
+                      Dashboard
+                    </ListItem>
+                  </Typography>
+                  <Typography
+                    as={NavLink}
+                    to="/dashboard/my-bookings"
+                    variant="small"
+                    // color="blue-gray"
+                    className="font-medium px-5rounded "
+                  >
+                    <ListItem className="flex items-center gap-2 py-2 pr-4">
+                      Offer Announcements
+                    </ListItem>
+                  </Typography>
+                  <Typography
+                    className="px-5 py-1 my-2 rounded text-red-500 bg-red-50"
+                    onClick={handleLogout}
+                  >
+                    Logout
+                  </Typography>
+                </List>
               </MenuList>
             </Menu>
           )}
