@@ -1,6 +1,7 @@
 import React from 'react';
 import Banner from '../../../Components/Banner/Banner';
 import TourismAndTravelGuide from './TourismAndTravelGuide/TourismAndTravelGuide';
+import TourType from '../TourType/TourType';
 
 
 const Home = () => {
@@ -8,6 +9,7 @@ const Home = () => {
         <div>
             <Banner/>
             <TourismAndTravelGuide/>
+            <TourType/>
         </div>
     );
 };
