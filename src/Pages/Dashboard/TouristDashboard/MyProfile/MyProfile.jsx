@@ -4,13 +4,11 @@ import {
   CardBody,
   CardFooter,
   Typography,
-  Tooltip,
   Input,
   Button,
 } from "@material-tailwind/react";
 import useAuth from "../../../../Hooks/useAuth";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { FaFacebook, FaFacebookF } from "react-icons/fa6";
+
 const MyProfile = () => {
   const user = useAuth();
   console.log(user);
@@ -18,14 +16,14 @@ const MyProfile = () => {
     <div className="my-10">
       <Card className="md:w-10/12 mx-auto">
         <CardHeader floated={false} className="h-80 ">
-          <img className="w-80 h-80 mx-auto rounded-full" src={user.photoURL} />
+          <img className="w-80 h-80 mx-auto rounded-full" src={user?.photoURL} alt={user?.displayName} />
         </CardHeader>
         <CardBody className="text-center">
           <Typography variant="h4" color="blue-gray" className="mb-2">
-            {user.displayName}
+            {user?.displayName}
           </Typography>
           <Typography color="blue-gray" className="font-medium" textGradient>
-            Email : {user.email}
+            Email : {user?.email}
           </Typography>
         </CardBody>
         <CardFooter className="">

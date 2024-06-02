@@ -14,25 +14,46 @@ import { useContext } from "react";
 import { AuthContext } from "../../Provider/AuthProvider";
 import Swal from "sweetalert2";
 const SignIN = () => {
-    const {googleLogin} = useContext(AuthContext)
+  const { googleLogin, signInWithEmailPassword } = useContext(AuthContext);
 
-    const handleGoogleLogin = ()=>{
-        googleLogin()
-        .then(res => {
-            Swal.fire({
-                icon: "success",
-                title: "Success!!",
-                text: "Logged In",
-              });
-          })
-          .catch(err => {
-            Swal.fire({
-                icon: "error",
-                title: "Oops...",
-                text: err.message,
-              });
-          });
-    }
+  const handleGoogleLogin = () => {
+    googleLogin()
+      .then(res => {
+        Swal.fire({
+          icon: "success",
+          title: "Success!!",
+          text: "Logged In",
+        });
+      })
+      .catch(err => {
+        Swal.fire({
+          icon: "error",
+          title: "Oops...",
+          text: err.message,
+        });
+      });
+  };
+
+  const handleSignIn = event => {
+    event.preventDefault();
+    const email = event.target.email.value;
+    const password = event.target.password.value;
+    signInWithEmailPassword(email, password)
+      .then(res => {
+        Swal.fire({
+          icon: "success",
+          title: "Success!!",
+          text: "Logged In",
+        });
+      })
+      .catch(err => {
+        Swal.fire({
+          icon: "error",
+          title: "Oops...",
+          text: err.message,
+        });
+      });
+  };
   return (
     <div className="flex justify-center items-center h-full">
       <div className="grid grid-cols-1 md:grid-cols-2 items-center justify-center">
@@ -41,7 +62,10 @@ const SignIN = () => {
         </div>
         <div className="">
           <Card color="transparent" shadow={false}>
-            <form className="mt-8 mb-2 w-80 max-w-screen-lg sm:w-96">
+            <form
+              onSubmit={handleSignIn}
+              className="mt-8 mb-2 w-80 max-w-screen-lg sm:w-96"
+            >
               <div className="text-center my-10">
                 <Typography variant="h4" color="blue-gray">
                   Sign In
@@ -51,8 +75,8 @@ const SignIN = () => {
                 </Typography>
               </div>
               <div className="mb-1 flex flex-col gap-6">
-                <Input type="email" label="Email" />
-                <Input type="password" label="Password" />
+                <Input type="email" label="Email" name="email" />
+                <Input type="password" label="Password" name="password" />
               </div>
               <Checkbox
                 label={
@@ -72,14 +96,17 @@ const SignIN = () => {
                 }
                 containerProps={{ className: "-ml-2.5" }}
               />
-              <Button className="mt-6" fullWidth>
+              <Button type="submit" className="mt-6" fullWidth>
                 Sign In
               </Button>
               <div className="my-5">
                 <Divider>OR</Divider>
               </div>
               <div className="text-center">
-                <IconButton onClick={handleGoogleLogin} className="text-2xl rounded bg-[#ea4335] hover:shadow-[#ea4335]/20 focus:shadow-[#ea4335]/20 active:shadow-[#ea4335]/10">
+                <IconButton
+                  onClick={handleGoogleLogin}
+                  className="text-2xl rounded bg-[#ea4335] hover:shadow-[#ea4335]/20 focus:shadow-[#ea4335]/20 active:shadow-[#ea4335]/10"
+                >
                   <FaGoogle />
                 </IconButton>
               </div>

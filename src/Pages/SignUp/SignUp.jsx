@@ -13,26 +13,67 @@ import { Link } from "react-router-dom";
 import { useContext } from "react";
 import { AuthContext } from "../../Provider/AuthProvider";
 import Swal from "sweetalert2";
+import { updateProfile } from "firebase/auth";
+import Auth from "../../firebase.config";
 const SignUp = () => {
-  const { googleLogin } = useContext(AuthContext);
+  const { googleLogin, createUserWithEmailPassword,user } = useContext(AuthContext);
 
   const handleGoogleLogin = () => {
     googleLogin()
       .then(res => {
         Swal.fire({
-            icon: "success",
-            title: "Success!!",
-            text: "Logged In",
-          });
+          icon: "success",
+          title: "Success!!",
+          text: "Logged In",
+        });
       })
       .catch(err => {
+        console.log(err);
         Swal.fire({
+          icon: "error",
+          title: "Oops...",
+          text: err.message,
+        });
+      });
+  };
+
+  const handleSignUp = event => {
+    event.preventDefault();
+    const name = event.target.name.value;
+    const email = event.target.email.value;
+    const photoUrl = event.target.photoUrl.value;
+    const password = event.target.password.value;
+    createUserWithEmailPassword(email,password)
+      .then(res => {
+        updateProfile(Auth.currentUser,{
+          displayName : name,
+          photoURL : photoUrl
+        })
+        .then(res => {
+          console.log(res);
+          Swal.fire({
+            icon: "success",
+            title: "Success!!",
+            text: "Created Successfully",
+          });
+        })
+        .catch(err => {
+          Swal.fire({
             icon: "error",
             title: "Oops...",
             text: err.message,
           });
+        });
+      })
+      .catch(err => {
+        Swal.fire({
+          icon: "error",
+          title: "Oops...",
+          text: err.message,
+        });
       });
   };
+
   return (
     <div className="flex justify-center items-center h-full">
       <div className="grid grid-cols-1 md:grid-cols-2 items-center">
@@ -41,7 +82,10 @@ const SignUp = () => {
         </div>
         <div className="">
           <Card color="transparent" shadow={false}>
-            <form className="mt-8 mb-2 w-80 max-w-screen-lg sm:w-96">
+            <form
+              onSubmit={handleSignUp}
+              className="mt-8 mb-2 w-80 max-w-screen-lg sm:w-96"
+            >
               <div className="text-center my-10">
                 <Typography variant="h4" color="blue-gray">
                   Sign Up
@@ -51,10 +95,10 @@ const SignUp = () => {
                 </Typography>
               </div>
               <div className="mb-1 flex flex-col gap-6">
-                <Input type="text" label="Name" />
-                <Input type="email" label="Email" />
-                <Input type="twxt" label="PhotoURL" />
-                <Input type="password" label="Password" />
+                <Input type="text" label="Name" name="name" />
+                <Input type="email" label="Email" name="email" />
+                <Input type="twxt" label="PhotoURL" name="photoUrl" />
+                <Input type="password" label="Password" name="password" />
               </div>
               <Checkbox
                 label={
@@ -74,14 +118,17 @@ const SignUp = () => {
                 }
                 containerProps={{ className: "-ml-2.5" }}
               />
-              <Button className="mt-6" fullWidth>
+              <Button type="submit" className="mt-6" fullWidth>
                 Sign Up
               </Button>
               <div className="my-5">
                 <Divider>OR</Divider>
               </div>
               <div className="text-center">
-                <IconButton onClick={handleGoogleLogin} className=" w-full text-2xl rounded bg-[#ea4335] hover:shadow-[#ea4335]/20 focus:shadow-[#ea4335]/20 active:shadow-[#ea4335]/10">
+                <IconButton
+                  onClick={handleGoogleLogin}
+                  className=" w-full text-2xl rounded bg-[#ea4335] hover:shadow-[#ea4335]/20 focus:shadow-[#ea4335]/20 active:shadow-[#ea4335]/10"
+                >
                   <FaGoogle />
                 </IconButton>
               </div>
