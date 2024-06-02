@@ -7,10 +7,10 @@ const DashboardLayout = () => {
     <div>
       <NavBar />
       <div className="grid grid-cols-1 md:grid-cols-8 my-[62px]">
-        <div className="grid-cols-1 md:col-span-2 border">
+        <div className="grid-cols-1 md:col-span-2">
             <Sidebar/>
         </div>
-        <div className="md:col-span-6">
+        <div className="md:col-span-6 mt-20 md:mt-0">
             <Outlet/>
         </div>
       </div>

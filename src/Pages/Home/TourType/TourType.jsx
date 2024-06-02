@@ -10,6 +10,7 @@ import "swiper/css/pagination";
 
 // import required modules
 import { Keyboard, Scrollbar, Navigation, Pagination } from "swiper/modules";
+import TourTypeCard from "../../../Components/TourTypeCard/TourTypeCard";
 const TourType = () => {
   return (
     <div>
@@ -17,7 +18,7 @@ const TourType = () => {
       <div className="my-12">
         <Swiper
           slidesPerView={1}
-          centeredSlides={false}
+          centeredSlides={true}
           slidesPerGroupSkip={1}
           grabCursor={true}
           keyboard={{
@@ -26,42 +27,31 @@ const TourType = () => {
           breakpoints={{
             769: {
               slidesPerView: 3,
-              slidesPerGroup: 3,
+              slidesPerGroup: 1,
             },
           }}
           scrollbar={true}
           navigation={true}
 
           modules={[Keyboard, Scrollbar, Navigation, Pagination]}
-          className="mySwiper md:w-10/12 mx-auto"
+          className="mySwiper md:w-10/12 mx-auto px-16"
         >
           <SwiperSlide >
-            <img className="h-32 w-full" src="https://cdn.magloft.com/github/swiper/images/page-001.jpg" />
+            <TourTypeCard/>
           </SwiperSlide>
-          <SwiperSlide>
-            <img className="h-32 w-full"  src="https://cdn.magloft.com/github/swiper/images/page-002.jpg" />
+          <SwiperSlide >
+            <TourTypeCard/>
           </SwiperSlide>
-          <SwiperSlide>
-            <img className="h-32 w-full"  src="https://cdn.magloft.com/github/swiper/images/page-003.jpg" />
+          <SwiperSlide >
+            <TourTypeCard/>
           </SwiperSlide>
-          <SwiperSlide>
-            <img className="h-32 w-full"  src="https://cdn.magloft.com/github/swiper/images/page-004.jpg" />
+          <SwiperSlide >
+            <TourTypeCard/>
           </SwiperSlide>
-          <SwiperSlide>
-            <img className="h-32 w-full"  src="https://cdn.magloft.com/github/swiper/images/page-005.jpg" />
+          <SwiperSlide >
+            <TourTypeCard/>
           </SwiperSlide>
-          <SwiperSlide>
-            <img  className="h-32 w-full" src="https://cdn.magloft.com/github/swiper/images/page-006.jpg" />
-          </SwiperSlide>
-          <SwiperSlide>
-            <img className="h-32 w-full"  src="https://cdn.magloft.com/github/swiper/images/page-007.jpg" />
-          </SwiperSlide>
-          <SwiperSlide>
-            <img className="h-32 w-full"  src="https://cdn.magloft.com/github/swiper/images/page-008.jpg" />
-          </SwiperSlide>
-          <SwiperSlide>
-            <img  className="h-32 w-full" src="https://cdn.magloft.com/github/swiper/images/page-009.jpg" />
-          </SwiperSlide>
+          
         </Swiper>
       </div>
     </div>
