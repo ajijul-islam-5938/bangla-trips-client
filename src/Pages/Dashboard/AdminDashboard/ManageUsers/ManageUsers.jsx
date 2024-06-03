@@ -44,7 +44,7 @@ const ManageUsers = () => {
         Swal.fire({
           icon: "success",
           title: "Success!!",
-          text: `${user.name} is now ADMIN`,
+          text: `${user.name} is now GUIDE`,
         });
         refetch();
       })

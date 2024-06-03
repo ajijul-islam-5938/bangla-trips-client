@@ -16,6 +16,7 @@ import RequestToAdmin from "../Pages/Dashboard/TouristDashboard/RequestToAdmin/R
 import PrivateRoute from "./PrivateRoute/PrivateRoute";
 import ManageUsers from "../Pages/Dashboard/AdminDashboard/ManageUsers/ManageUsers";
 import AdminRoute from "./AdminRoute/AdminRoute";
+import AddPackages from "../Pages/Dashboard/AdminDashboard/AddPaackages/AddPackages";
 
 const router = createBrowserRouter([
   {
@@ -79,6 +80,10 @@ const router = createBrowserRouter([
         {
             path : "/dashboard/manage-user",
             element : <AdminRoute><ManageUsers/></AdminRoute>
+        },
+        {
+            path : "/dashboard/add-package",
+            element : <AdminRoute><AddPackages/></AdminRoute>
         }
     ]
   }
