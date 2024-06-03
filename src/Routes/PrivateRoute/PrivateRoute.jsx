@@ -5,7 +5,7 @@ const PrivateRoute = ({children}) => {
     const location = useLocation();
     const pathName = location.pathname
     const user = useAuth();
-    console.log(user);
+    // console.log(user);
 
     if (user) {
         return children;

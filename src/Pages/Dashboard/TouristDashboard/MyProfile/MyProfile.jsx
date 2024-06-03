@@ -11,7 +11,7 @@ import useAuth from "../../../../Hooks/useAuth";
 
 const MyProfile = () => {
   const user = useAuth();
-  console.log(user);
+//   console.log(user);
   return (
     <div className="my-10">
       <Card className="md:w-10/12 mx-auto">

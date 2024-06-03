@@ -18,7 +18,7 @@ const TourType = () => {
       <div className="my-12">
         <Swiper
           slidesPerView={1}
-          centeredSlides={true}
+          centeredSlides={false}
           slidesPerGroupSkip={1}
           grabCursor={true}
           keyboard={{
@@ -26,8 +26,8 @@ const TourType = () => {
           }}
           breakpoints={{
             769: {
-              slidesPerView: 3,
-              slidesPerGroup: 1,
+              slidesPerView: 4,
+              slidesPerGroup: 2,
             },
           }}
           scrollbar={true}

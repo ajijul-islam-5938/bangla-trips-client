@@ -49,7 +49,7 @@ export default function PackageCard() {
             1599
           </Typography>
         </div>
-        <Typography variant="p" color="blue-gray" className="font-medium">
+        <Typography variant="h6" color="blue-gray" className="font-medium">
            Tour Type :  Relaxation
           </Typography>
         <Typography color="gray"></Typography>

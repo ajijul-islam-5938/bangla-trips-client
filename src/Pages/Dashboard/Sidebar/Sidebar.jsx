@@ -1,23 +1,9 @@
-import {
-  Card,
-  Typography,
-  List,
-  ListItem,
-  ListItemPrefix,
-  ListItemSuffix,
-  Chip,
-} from "@material-tailwind/react";
-import {
-  PresentationChartBarIcon,
-  ShoppingBagIcon,
-  UserCircleIcon,
-  Cog6ToothIcon,
-  InboxIcon,
-  PowerIcon,
-} from "@heroicons/react/24/solid";
+import { Card, Typography, List, ListItem } from "@material-tailwind/react";
 import { NavLink } from "react-router-dom";
+import useAdmin from "../../../Hooks/useAdmin";
 
 const Sidebar = () => {
+    const isAdmin = useAdmin()
   return (
     <div>
       <Card className="md:fixed h-full md:h-[calc(100vh-2rem)] w-full md:max-w-[20rem] p-4 shadow-xl shadow-blue-gray-900/5 ">
@@ -71,6 +57,17 @@ const Sidebar = () => {
               Request To Admin
             </ListItem>
           </Typography>
+{    isAdmin?.admin &&      <Typography
+            as={NavLink}
+            to="/dashboard/manage-user"
+            variant="small"
+            // color="blue-gray"
+            className="font-medium"
+          >
+            <ListItem className="flex items-center gap-2 py-2 pr-4">
+              Manage User
+            </ListItem>
+          </Typography>}
         </List>
       </Card>
     </div>

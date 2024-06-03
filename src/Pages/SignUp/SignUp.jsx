@@ -39,7 +39,7 @@ const SignUp = () => {
         axiosPublic.post(`/user`, userInfo);
       })
       .catch(err => {
-        console.log(err);
+        // console.log(err);
         Swal.fire({
           icon: "error",
           title: "Oops...",

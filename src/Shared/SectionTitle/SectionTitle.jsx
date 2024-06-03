@@ -11,7 +11,7 @@ const SectionTitle = ({ title }) => {
       <span className="text-[#ed145b]">Tourist </span>And Travel Guide
     </h3>
   );
-  console.log(firstWord + remainingWord);
+  // console.log(firstWord + remainingWord);
   return (
     <div className="text-center space-y-3 md:w-[60%] mx-auto">
       {moddedTitle}
