@@ -13,6 +13,7 @@ import MyProfile from "./Pages/Dashboard/TouristDashboard/MyProfile/MyProfile";
 import MyWishList from "./Pages/Dashboard/TouristDashboard/MyWishList/MyWishList";
 import MyBookings from "./Pages/Dashboard/TouristDashboard/MyBookings/MyBookings";
 import RequestToAdmin from "./Pages/Dashboard/TouristDashboard/RequestToAdmin/RequestToAdmin";
+import PrivateRoute from "./Components/PrivateRoute/PrivateRoute";
 
 const router = createBrowserRouter([
   {
@@ -51,11 +52,11 @@ const router = createBrowserRouter([
   },
   {
     path : "/dashboard",
-    element : <DashboardLayout/>,
+    element : <PrivateRoute><DashboardLayout/></PrivateRoute>,
     children : [
         {
             path : "/dashboard",
-            element : <Dashboard/>
+            element : <PrivateRoute><Dashboard/></PrivateRoute>
         },
         {
             path : "/dashboard/my-profile",

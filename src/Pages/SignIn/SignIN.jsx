@@ -9,7 +9,7 @@ import {
 import { FaGoogle } from "react-icons/fa6";
 import loginImg from "../../assets/login.avif";
 import { Divider } from "@mui/material";
-import { Link } from "react-router-dom";
+import { Link, useLocation, useNavigate,} from "react-router-dom";
 import { useContext } from "react";
 import { AuthContext } from "../../Provider/AuthProvider";
 import Swal from "sweetalert2";
@@ -17,7 +17,11 @@ import useAxios from "../../Hooks/useAxios";
 import useAuth from "../../Hooks/useAuth";
 
 const SignIN = () => {
+
   const { googleLogin, signInWithEmailPassword } = useContext(AuthContext);
+  const locationn = useLocation();
+  const state = locationn.state;
+  const navigate = useNavigate();
 
   const { axiosPublic } = useAxios();
   const user = useAuth();
@@ -37,6 +41,8 @@ const SignIN = () => {
         };
 
         axiosPublic.post(`/user`, userInfo);
+
+        navigate(state ? state : "/")
       })
       .catch(err => {
         Swal.fire({
@@ -58,6 +64,7 @@ const SignIN = () => {
           title: "Success!!",
           text: "Logged In",
         });
+        navigate(state ? state : "/")
       })
       .catch(err => {
         Swal.fire({
