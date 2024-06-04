@@ -20,6 +20,7 @@ import AddPackages from "../Pages/Dashboard/AdminDashboard/AddPaackages/AddPacka
 import AllPackages from "../Pages/AllPackages/AllPackages";
 import PackageDetails from "../Pages/PackageDetails/PackageDetails";
 import GuideProfile from "../Components/GuideProfile/GuideProfile";
+import MyAssignedTour from "../Pages/Dashboard/TouristDashboard/MyAssignedTour/MyAssignedTour";
 
 const router = createBrowserRouter([
   {
@@ -101,6 +102,10 @@ const router = createBrowserRouter([
         {
             path : "/dashboard/add-package",
             element : <AdminRoute><AddPackages/></AdminRoute>
+        },
+        {
+            path : "/dashboard/assigned-tour",
+            element : <MyAssignedTour/>
         }
     ]
   }

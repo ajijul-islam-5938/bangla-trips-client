@@ -18,7 +18,8 @@ const BookNow = ({ data,refetch }) => {
       price: event.target.price.value,
       email: event.target.email.value,
       photoUrl: event.target.photoUrl.value,
-      guide: guide || "",
+      guideName: guide.name,
+      guideEmail: guide.email,
       date: event.target.date.value,
       package: data,
       status : "inReview"

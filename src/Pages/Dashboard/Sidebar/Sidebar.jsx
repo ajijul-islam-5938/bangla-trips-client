@@ -57,6 +57,17 @@ const Sidebar = () => {
               Request To Admin
             </ListItem>
           </Typography>
+          <Typography
+                as={NavLink}
+                to="/dashboard/assigned-tour"
+                variant="small"
+                // color="blue-gray"
+                className="font-medium"
+              >
+                <ListItem className="flex items-center gap-2 py-2 pr-4">
+                 My Assigned Tours
+                </ListItem>
+              </Typography>
           {isAdmin?.admin && (
             <>
               
@@ -82,6 +93,7 @@ const Sidebar = () => {
                  Add Package
                 </ListItem>
               </Typography>
+ 
             </>
           )}
         </List>

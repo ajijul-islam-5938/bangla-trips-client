@@ -9,8 +9,34 @@ import {
 } from "@material-tailwind/react";
 import dolor from "../../assets/dolor.gif";
 import { Link } from "react-router-dom";
+import useAxios from "../../Hooks/useAxios";
+import Swal from "sweetalert2";
 
 export default function PackageCard({ item }) {
+  const { axiosSecure } = useAxios();
+  const handleWish = (id, item) => {
+    const wishData = {
+      wishId: id,
+    };
+
+    console.log(wishData);
+    axiosSecure
+      .post("/wish-list", wishData)
+      .then(res => {
+        Swal.fire({
+          icon: "success",
+          title: "Success!!",
+          text: "Added to wish List",
+        });
+      })
+      .catch(err => {
+        Swal.fire({
+          icon: "error",
+          title: "Oops...",
+          text: err.message,
+        });
+      });
+  };
   return (
     <Card className="w-full max-w-[26rem] shadow-lg">
       <CardHeader floated={false} color="blue-gray">
@@ -21,6 +47,7 @@ export default function PackageCard({ item }) {
         />
         <div className="to-bg-black-10 absolute inset-0 h-full w-full bg-gradient-to-tr from-transparent via-transparent to-black/60 " />
         <IconButton
+          onClick={() => handleWish(item._id, item)}
           size="sm"
           color="red"
           variant="text"

@@ -12,35 +12,37 @@ const TABLE_HEAD = [
   "Action",
 ];
 
-const ManageUsers = () => {
+const MyAssignedTour = () => {
   const { axiosSecure } = useAxios();
   const user = useAuth();
-  const { data: bookings, refetch } = useQuery({
-    queryKey: ["bookings"],
+
+  const { data: assigned, refetch } = useQuery({
+    queryKey: ["assigned"],
     queryFn: async () => {
-      const res = await axiosSecure.get(`/my-bookings?email=${user.email}`);
+      const res = await axiosSecure.get(`/assigned-tours?email=${user.email}`);
       return res.data;
     },
   });
-  console.log(bookings);
-  const handleCancel = (_id, booking) => {
+  console.log(assigned);
+
+  const handleReject = (_id, item) => {
     Swal.fire({
       title: "Are you sure?",
-      text: `You want to Cancel ${booking.package.packageName}'s Booking ?`,
+      text: `Want to Reject ${item.name}'s Booking ?`,
       icon: "warning",
       showCancelButton: true,
       confirmButtonColor: "#3085d6",
       cancelButtonColor: "#d33",
-      confirmButtonText: "Yes, Cancel it!",
+      confirmButtonText: "Yes, Reject it!",
     }).then(result => {
       if (result.isConfirmed) {
         axiosSecure
-          .delete(`/my-booking/delete/${_id}`)
+          .patch(`/booking/reject/${_id}`)
           .then(res => {
             Swal.fire({
               icon: "success",
               title: "Success!!",
-              text: `${user.name} is now ADMIN`,
+              text: ` Request of ${assigned.name} is Rejected`,
             });
             refetch();
           })
@@ -55,31 +57,43 @@ const ManageUsers = () => {
     });
   };
 
-  const handleGuide = (_id, user) => {
-    axiosSecure
-      .patch(`/user/guide/${_id}`)
-      .then(res => {
-        Swal.fire({
-          icon: "success",
-          title: "Success!!",
-          text: `${user.name} is now GUIDE`,
-        });
-        refetch();
-      })
-      .catch(err => {
-        Swal.fire({
-          icon: "error",
-          title: "Oops...",
-          text: err.message,
-        });
-      });
+  const handleAccept = (_id, item) => {
+    Swal.fire({
+      title: "Are you sure?",
+      text: `Want to Accept ${item.name}'s Booking ?`,
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, Accept it!",
+    }).then(result => {
+      if (result.isConfirmed) {
+        axiosSecure
+          .patch(`/booking/accept/${_id}`)
+          .then(res => {
+            Swal.fire({
+              icon: "success",
+              title: "Success!!",
+              text: ` Request of ${assigned.name} is Accepted`,
+            });
+            refetch();
+          })
+          .catch(err => {
+            Swal.fire({
+              icon: "error",
+              title: "Oops...",
+              text: err.message,
+            });
+          });
+      }
+    });
   };
 
   return (
     <div>
       <h1 className="text-center font-semibold text-2xl my-16">
         {" "}
-        Manage My Booking
+        My Assigned Tours
       </h1>
       <Card className="h-full w-full md:w-11/12 mx-auto my-16 overflow-x-scroll">
         <table className="w-full min-w-max table-auto text-left ">
@@ -102,15 +116,15 @@ const ManageUsers = () => {
             </tr>
           </thead>
           <tbody>
-            {bookings?.map(booking => (
-              <tr key={booking._id} className="even:bg-blue-gray-50/50">
+            {assigned?.map(item => (
+              <tr key={item._id} className="even:bg-blue-gray-50/50">
                 <td className="p-4">
                   <Typography
                     variant="small"
                     color="blue-gray"
                     className="font-normal"
                   >
-                    {booking.package.packageName}
+                    {item.package.packageName}
                   </Typography>
                 </td>
                 <td className="p-4">
@@ -119,7 +133,7 @@ const ManageUsers = () => {
                     color="blue-gray"
                     className="font-normal"
                   >
-                    {booking?.guideName}
+                    {item.name}
                   </Typography>
                 </td>
                 <td className="p-4">
@@ -132,7 +146,7 @@ const ManageUsers = () => {
                       variant="ghost"
                       color="light-green"
                       size="sm"
-                      value={booking.price}
+                      value={item.price}
                       className="text-center"
                     />
                   </Typography>
@@ -143,7 +157,7 @@ const ManageUsers = () => {
                     color="blue-gray"
                     className="font-normal"
                   >
-                    {booking.status === "inReview" ? (
+                    {item.status === "inReview" ? (
                       <Chip
                         variant="ghost"
                         color="orange"
@@ -151,7 +165,7 @@ const ManageUsers = () => {
                         value="In Review"
                         className="text-center"
                       />
-                    ) : booking.status === "rejected" ? (
+                    ) : item.status === "rejected" ? (
                       <Chip
                         variant="ghost"
                         color="red"
@@ -180,7 +194,7 @@ const ManageUsers = () => {
                       variant="ghost"
                       color="light-blue"
                       size="sm"
-                      value={booking.date}
+                      value={item.date}
                       className="text-center"
                     />
                   </Typography>
@@ -191,27 +205,25 @@ const ManageUsers = () => {
                     color="blue-gray"
                     className="font-medium flex gap-2 items-center"
                   >
-                    {booking.status === "accepted" ? (
-                      <Button
-                        onClick={() => handleGuide(booking._id, booking)}
-                        variant="outlined"
-                        size="sm"
-                        color="blue"
-                        disabled={booking.role === "requested" ? false : true}
-                      >
-                        Pay Now
-                      </Button>
-                    ) : (
-                      <Button
-                        onClick={() => handleCancel(booking._id, booking)}
-                        variant="gradient"
-                        size="sm"
-                        color="red"
-                        disabled={booking.role === "admin" ? true : false}
-                      >
-                        Cancel
-                      </Button>
-                    )}
+                    <Button
+                      onClick={() => handleAccept(item._id, item)}
+                      variant="gradient"
+                      size="sm"
+                      color="green"
+                      disabled={item.status === "accepted" ? true : false}
+                    >
+                      Accept
+                    </Button>
+
+                    <Button
+                      onClick={() => handleReject(item._id, item)}
+                      variant="gradient"
+                      size="sm"
+                      color="red"
+                      disabled={item.status === "rejected" ? true : false}
+                    >
+                      Reject
+                    </Button>
                   </Typography>
                 </td>
               </tr>
@@ -223,4 +235,4 @@ const ManageUsers = () => {
   );
 };
 
-export default ManageUsers;
+export default MyAssignedTour;
