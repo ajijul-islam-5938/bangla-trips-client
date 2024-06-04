@@ -47,7 +47,7 @@ const PackageDetails = () => {
   const handleOpen = value => setOpen(open === value ? 0 : value);
   const { axiosSecure } = useAxios();
 
-  const { data: guides } = useQuery({
+  const { data: guides ,refetch} = useQuery({
     queryKey: "guides",
     queryFn: async () => {
       const res = await axiosSecure.get("/guides");
@@ -70,7 +70,7 @@ const PackageDetails = () => {
           Our Tour Plan
         </h1>
 
-        {data.tourPlan.map((plan, inx) => (
+        {data?.tourPlan?.map((plan, inx) => (
           <Accordion
             key={inx}
             open={open === 1}
@@ -126,7 +126,7 @@ const PackageDetails = () => {
         </Card>
 
         <h1 className="text-2xl text-center font-semibold">Book Now</h1>
-        <BookNow data={data}/>
+        <BookNow data={data} refetch={refetch}/>
       </div>
     </div>
   );

@@ -16,43 +16,66 @@ const ManageUsers = () => {
   });
 
   const handleAdmin = (_id, user) => {
-    axiosSecure
-      .patch(`/user/admin/${_id}`)
-      .then(res => {
-        Swal.fire({
-          icon: "success",
-          title: "Success!!",
-          text: `${user.name} is now ADMIN`,
-        });
-        refetch();
-      })
-      .catch(err => {
-        Swal.fire({
-          icon: "error",
-          title: "Oops...",
-          text: err.message,
-        });
-      });
+    Swal.fire({
+      title: "Are you sure?",
+      text: `You want to set ${user.name} as Admin ?`,
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, Book it!",
+    }).then(result => {
+      if (result.isConfirmed) {
+        axiosSecure
+        .patch(`/user/admin/${_id}`)
+        .then(res => {
+          Swal.fire({
+            icon: "success",
+            title: "Success!!",
+            text: `${user.name} is now ADMIN`,
+          });
+          })
+          .catch(err => {
+            Swal.fire({
+              icon: "error",
+              title: "Oops...",
+              text: err.message,
+            });
+          });
+      }
+    });
   };
 
   const handleGuide = (_id, user) => {
-    axiosSecure
-      .patch(`/user/guide/${_id}`)
-      .then(res => {
-        Swal.fire({
-          icon: "success",
-          title: "Success!!",
-          text: `${user.name} is now GUIDE`,
-        });
-        refetch();
-      })
-      .catch(err => {
-        Swal.fire({
-          icon: "error",
-          title: "Oops...",
-          text: err.message,
-        });
-      });
+
+    Swal.fire({
+      title: "Are you sure?",
+      text: `You want to set ${user.name} as Guide ?`,
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, Book it!",
+    }).then(result => {
+      if (result.isConfirmed) {
+        axiosSecure
+        .patch(`/user/guide/${_id}`)
+          .then(res => {
+            Swal.fire({
+              icon: "success",
+              title: "Success!!",
+              text: `${user.name} is now GUIDE`,
+            });
+          })
+          .catch(err => {
+            Swal.fire({
+              icon: "error",
+              title: "Oops...",
+              text: err.message,
+            });
+          });
+      }
+    });
   };
 
   return (

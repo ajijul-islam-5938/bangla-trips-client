@@ -1,31 +1,58 @@
-import {
-  Button,
-  Input,
-  Option,
-  Select,
-} from "@material-tailwind/react";
+import { Button, Input, Option, Select } from "@material-tailwind/react";
 import useAuth from "../../Hooks/useAuth";
 import useAxios from "../../Hooks/useAxios";
 import { useQuery } from "@tanstack/react-query";
 import { useState } from "react";
+import Swal from "sweetalert2";
 
-const BookNow = ({ data }) => {
-const [guide,setGuide] = useState("")
+const BookNow = ({ data,refetch }) => {
+  const user = useAuth();
+  const { axiosSecure } = useAxios();
+
+  const [guide, setGuide] = useState({});
   const handleAddPackage = event => {
     event.preventDefault();
+    refetch()
     const packageInfo = {
       name: event.target.name.value,
       price: event.target.price.value,
-      email: event.target.email.value.split(","),
+      email: event.target.email.value,
       photoUrl: event.target.photoUrl.value,
-      guide: guide,
-      date : event.target.date.value
+      guide: guide || "",
+      date: event.target.date.value,
+      package: data,
+      status : "inReview"
     };
-    
-  };
 
-  const user = useAuth();
-  const { axiosSecure } = useAxios();
+    Swal.fire({
+      title: "Are you sure?",
+      text: `You want to Booking ${data.packageName} Package ?`,
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, Book it!",
+    }).then(result => {
+      if (result.isConfirmed) {
+        axiosSecure
+          .post("/booking", packageInfo)
+          .then(res => {
+            Swal.fire({
+              icon: "success",
+              title: "Success!!",
+              text: "The Package Booked For You",
+            });
+          })
+          .catch(err => {
+            Swal.fire({
+              icon: "error",
+              title: "Oops...",
+              text: err.message,
+            });
+          });
+      }
+    });
+  };
 
   const { data: guides } = useQuery({
     queryKey: "guides",
@@ -72,11 +99,12 @@ const [guide,setGuide] = useState("")
           />
           <Input type="date" variant="outlined" label="Date" name="date" />
 
-          <Select onChange={(e)=>setGuide(e)} label="Select Guide" name="guide">
-            
-            {
-                guides?.map(guide => <Option value={guide.email} key={guide._id}>{guide.name}</Option>)
-            }
+          <Select onChange={e => setGuide(e)} label="Select Guide" name="guide">
+            {guides?.map(guide => (
+              <Option value={{email : guide.email, name : guide.name}} key={guide._id}>
+                {guide.name}
+              </Option>
+            ))}
           </Select>
         </div>
 
