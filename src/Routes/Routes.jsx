@@ -19,6 +19,7 @@ import AdminRoute from "./AdminRoute/AdminRoute";
 import AddPackages from "../Pages/Dashboard/AdminDashboard/AddPaackages/AddPackages";
 import AllPackages from "../Pages/AllPackages/AllPackages";
 import PackageDetails from "../Pages/PackageDetails/PackageDetails";
+import GuideProfile from "../Components/GuideProfile/GuideProfile";
 
 const router = createBrowserRouter([
   {
@@ -61,6 +62,11 @@ const router = createBrowserRouter([
             path : "/package/details/:id",
             element : <PackageDetails/>,
             loader : ({params}) => fetch(`${import.meta.env.VITE_SERVER_URL}/package/${params.id}`)
+        },
+        {
+            path : "/guide/:id",
+            element : <GuideProfile/>,
+            loader : ({params})=> fetch(`${import.meta.env.VITE_SERVER_URL}/guide/${params.id}`)
         }
     ]
   },

@@ -22,7 +22,9 @@ import PackageCard from "../../../../Components/PackageCard/PackageCard";
 import { List, ListItem, Card } from "@material-tailwind/react";
 import { Link } from "react-router-dom";
 import useData from "../../../../Hooks/useData";
-
+import { useQuery } from "@tanstack/react-query";
+import useAxios from "../../../../Hooks/useAxios";
+import { ListItemAvatar, ListItemButton, ListItemText } from "@mui/material";
 
 const steps = [
   {
@@ -54,9 +56,19 @@ const TourismAndTravelGuide = () => {
     setActiveStep(0);
   };
 
-  const {datas} = useData({
-    route : "/packages/last"
-  })
+  const { datas } = useData({
+    route: "/packages/last",
+  });
+
+  const { axiosSecure } = useAxios();
+
+  const { data: guides } = useQuery({
+    queryKey: "guides",
+    queryFn: async () => {
+      const res = await axiosSecure.get("/guides");
+      return res.data;
+    },
+  });
 
   const data = [
     {
@@ -79,7 +91,7 @@ const TourismAndTravelGuide = () => {
               width="100%"
               height="100%"
               src="https://www.youtube.com/embed/Z44fFqBQQtg"
-              frameBorder='0'
+              frameBorder="0"
               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
               allowFullScreen
               className="rounded-xl"
@@ -88,7 +100,7 @@ const TourismAndTravelGuide = () => {
               width="100%"
               height="100%"
               src="https://www.youtube.com/embed/JLjvEYMBGzQ"
-              frameBorder='0'
+              frameBorder="0"
               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
               allowFullScreen
               className="rounded-xl"
@@ -97,7 +109,7 @@ const TourismAndTravelGuide = () => {
               width="100%"
               height="100%"
               src="https://www.youtube.com/embed/v2QvHyOTlo4"
-              frameBorder='0'
+              frameBorder="0"
               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
               allowFullScreen
               className="rounded-xl"
@@ -106,7 +118,7 @@ const TourismAndTravelGuide = () => {
               width="100%"
               height="100%"
               src="https://www.youtube.com/embed/1hfrHd3_MMs"
-              frameBorder='0'
+              frameBorder="0"
               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
               allowFullScreen
               className="rounded-xl"
@@ -182,10 +194,9 @@ const TourismAndTravelGuide = () => {
             </p>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
-            
-            {
-              datas?.map(item => <PackageCard key={item._id} item={item} />)
-            }
+            {datas?.map(item => (
+              <PackageCard key={item._id} item={item} />
+            ))}
           </div>
           <Link to="/packages">
             <MButton
@@ -215,102 +226,35 @@ const TourismAndTravelGuide = () => {
           <div className="">
             <Card className="md:w-10/12 mx-auto">
               <List>
-                <ListItem className="flex justify-between items-center">
-                  <div className="flex">
-                    <ListItemPrefix>
-                      <Avatar
-                        variant="circular"
-                        alt="candice"
-                        src="https://docs.material-tailwind.com/img/face-1.jpg"
-                      />
-                    </ListItemPrefix>
-                    <div>
-                      <Typography variant="h6" color="blue-gray">
-                        Tania Andrew
-                      </Typography>
-                      <Typography
-                        variant="small"
-                        color="gray"
-                        className="font-normal"
-                      >
-                        Software Engineer @ Material Tailwind
-                      </Typography>
+                {guides?.map(guide => (
+                  <ListItem
+                    key={guide._id}
+                    className="flex justify-between items-center"
+                  >
+                    <div className="flex">
+                      <ListItemPrefix>
+                        <Avatar
+                          variant="circular"
+                          alt="candice"
+                          src={guide?.photoURL}
+                        />
+                      </ListItemPrefix>
+                      <div>
+                        <Typography variant="h6" color="blue-gray">
+                          {guide.name}
+                        </Typography>
+                        <Typography
+                          variant="small"
+                          color="gray"
+                          className="font-normal"
+                        >
+                          Software Engineer @ Material Tailwind
+                        </Typography>
+                      </div>
                     </div>
-                  </div>
-                  <Button variant="outlined">View Details</Button>
-                </ListItem>
-                <ListItem className="flex justify-between items-center">
-                  <div className="flex">
-                    <ListItemPrefix>
-                      <Avatar
-                        variant="circular"
-                        alt="candice"
-                        src="https://docs.material-tailwind.com/img/face-1.jpg"
-                      />
-                    </ListItemPrefix>
-                    <div>
-                      <Typography variant="h6" color="blue-gray">
-                        Tania Andrew
-                      </Typography>
-                      <Typography
-                        variant="small"
-                        color="gray"
-                        className="font-normal"
-                      >
-                        Software Engineer @ Material Tailwind
-                      </Typography>
-                    </div>
-                  </div>
-                  <Button variant="outlined">View Details</Button>
-                </ListItem>
-                <ListItem className="flex justify-between items-center">
-                  <div className="flex">
-                    <ListItemPrefix>
-                      <Avatar
-                        variant="circular"
-                        alt="candice"
-                        src="https://docs.material-tailwind.com/img/face-1.jpg"
-                      />
-                    </ListItemPrefix>
-                    <div>
-                      <Typography variant="h6" color="blue-gray">
-                        Tania Andrew
-                      </Typography>
-                      <Typography
-                        variant="small"
-                        color="gray"
-                        className="font-normal"
-                      >
-                        Software Engineer @ Material Tailwind
-                      </Typography>
-                    </div>
-                  </div>
-                  <Button variant="outlined">View Details</Button>
-                </ListItem>
-                <ListItem className="flex justify-between items-center">
-                  <div className="flex">
-                    <ListItemPrefix>
-                      <Avatar
-                        variant="circular"
-                        alt="candice"
-                        src="https://docs.material-tailwind.com/img/face-1.jpg"
-                      />
-                    </ListItemPrefix>
-                    <div>
-                      <Typography variant="h6" color="blue-gray">
-                        Tania Andrew
-                      </Typography>
-                      <Typography
-                        variant="small"
-                        color="gray"
-                        className="font-normal"
-                      >
-                        Software Engineer @ Material Tailwind
-                      </Typography>
-                    </div>
-                  </div>
-                  <Button variant="outlined">View Details</Button>
-                </ListItem>
+                    <Link to={`/guide/${guide._id}`}><Button variant="outlined">View Details</Button></Link>
+                  </ListItem>
+                ))}
               </List>
             </Card>
           </div>
