@@ -8,14 +8,16 @@ import {
   IconButton,
 } from "@material-tailwind/react";
 import dolor from "../../assets/dolor.gif";
+import { Link } from "react-router-dom";
 
-export default function PackageCard() {
+export default function PackageCard({ item }) {
   return (
     <Card className="w-full max-w-[26rem] shadow-lg">
       <CardHeader floated={false} color="blue-gray">
         <img
-          src="https://images.unsplash.com/photo-1499696010180-025ef6e1a8f9?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80"
+          src={item.gallery[0]}
           alt="ui/ux review check"
+          className="w-full h-60"
         />
         <div className="to-bg-black-10 absolute inset-0 h-full w-full bg-gradient-to-tr from-transparent via-transparent to-black/60 " />
         <IconButton
@@ -37,27 +39,27 @@ export default function PackageCard() {
       <CardBody>
         <div className="mb-3 flex items-center justify-between">
           <Typography variant="h5" color="blue-gray" className="font-medium">
-            Wooden House, Florida
+            {item.packageName}
           </Typography>
-
 
           <Typography
             color="blue-gray"
             className="flex items-center gap-1.5 font-normal"
           >
             <img className="max-w-8" src={dolor} alt="" />
-            1599
+            {item.price}
           </Typography>
         </div>
         <Typography variant="h6" color="blue-gray" className="font-medium">
-           Tour Type :  Relaxation
-          </Typography>
-        <Typography color="gray"></Typography>
+          Tour Type : {item.tourType}
+        </Typography>
       </CardBody>
       <CardFooter className="pt-3">
-        <Button size="lg" fullWidth={true}>
-          View Details
-        </Button>
+        <Link to={`/package/details/${item._id}`}>
+          <Button size="lg" fullWidth={true}>
+            View Details
+          </Button>
+        </Link>
       </CardFooter>
     </Card>
   );

@@ -1,10 +1,8 @@
 import { Button, Card, Chip, Typography } from "@material-tailwind/react";
 import { useQuery } from "@tanstack/react-query";
 import useAxios from "../../../../Hooks/useAxios";
-import useAdmin from "../../../../Hooks/useAdmin";
-import { RiAdminLine } from "react-icons/ri";
 import Swal from "sweetalert2";
-const TABLE_HEAD = ["Name", "Job", "Employed", ""];
+const TABLE_HEAD = ["Name", "E-mail", "Role", "Actions"];
 
 const ManageUsers = () => {
   const { axiosSecure } = useAxios();
@@ -60,8 +58,8 @@ const ManageUsers = () => {
   return (
     <div>
       <h1 className="text-center font-semibold text-2xl my-16">Manage Users</h1>
-      <Card className="h-full w-full md:w-11/12 mx-auto my-16">
-        <table className="w-full min-w-max table-auto text-left">
+      <Card className="h-full w-full md:w-11/12 mx-auto my-16 overflow-x-scroll">
+        <table className="w-full min-w-max table-auto text-left ">
           <thead>
             <tr>
               {TABLE_HEAD.map(head => (

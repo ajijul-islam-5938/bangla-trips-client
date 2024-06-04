@@ -17,6 +17,8 @@ import PrivateRoute from "./PrivateRoute/PrivateRoute";
 import ManageUsers from "../Pages/Dashboard/AdminDashboard/ManageUsers/ManageUsers";
 import AdminRoute from "./AdminRoute/AdminRoute";
 import AddPackages from "../Pages/Dashboard/AdminDashboard/AddPaackages/AddPackages";
+import AllPackages from "../Pages/AllPackages/AllPackages";
+import PackageDetails from "../Pages/PackageDetails/PackageDetails";
 
 const router = createBrowserRouter([
   {
@@ -50,6 +52,15 @@ const router = createBrowserRouter([
         {
             path : "/sign-up",
             element : <SignUp/>
+        },
+        {
+            path : "/packages",
+            element : <AllPackages/>
+        },
+        {
+            path : "/package/details/:id",
+            element : <PackageDetails/>,
+            loader : ({params}) => fetch(`${import.meta.env.VITE_SERVER_URL}/package/${params.id}`)
         }
     ]
   },

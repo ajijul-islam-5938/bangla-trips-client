@@ -15,9 +15,9 @@ const TourType = () => {
   return (
     <div>
       <SectionTitle title="Tour Type" />
-      <div className="my-12">
+      <div className="my-12 tour-type-section p-10">
         <Swiper
-          slidesPerView={1}
+          slidesPerView={2}
           centeredSlides={false}
           slidesPerGroupSkip={1}
           grabCursor={true}

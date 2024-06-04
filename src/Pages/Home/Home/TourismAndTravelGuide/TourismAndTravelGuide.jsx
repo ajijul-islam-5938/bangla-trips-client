@@ -19,30 +19,10 @@ import Paper from "@mui/material/Paper";
 import Typography from "@mui/material/Typography";
 import SectionTitle from "../../../../Shared/SectionTitle/SectionTitle";
 import PackageCard from "../../../../Components/PackageCard/PackageCard";
-import {
-  List,
-  ListItem,
-  ListItemSuffix,
-  Card,
-  IconButton,
-} from "@material-tailwind/react";
+import { List, ListItem, Card } from "@material-tailwind/react";
+import { Link } from "react-router-dom";
+import useData from "../../../../Hooks/useData";
 
-function TrashIcon() {
-  return (
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      viewBox="0 0 24 24"
-      fill="currentColor"
-      className="h-5 w-5"
-    >
-      <path
-        fillRule="evenodd"
-        d="M16.5 4.478v.227a48.816 48.816 0 013.878.512.75.75 0 11-.256 1.478l-.209-.035-1.005 13.07a3 3 0 01-2.991 2.77H8.084a3 3 0 01-2.991-2.77L4.087 6.66l-.209.035a.75.75 0 01-.256-1.478A48.567 48.567 0 017.5 4.705v-.227c0-1.564 1.213-2.9 2.816-2.951a52.662 52.662 0 013.369 0c1.603.051 2.815 1.387 2.815 2.951zm-6.136-1.452a51.196 51.196 0 013.273 0C14.39 3.05 15 3.684 15 4.478v.113a49.488 49.488 0 00-6 0v-.113c0-.794.609-1.428 1.364-1.452zm-.355 5.945a.75.75 0 10-1.5.058l.347 9a.75.75 0 101.499-.058l-.346-9zm5.48.058a.75.75 0 10-1.498-.058l-.347 9a.75.75 0 001.5.058l.345-9z"
-        clipRule="evenodd"
-      />
-    </svg>
-  );
-}
 
 const steps = [
   {
@@ -74,6 +54,10 @@ const TourismAndTravelGuide = () => {
     setActiveStep(0);
   };
 
+  const {datas} = useData({
+    route : "/packages/last"
+  })
+
   const data = [
     {
       label: "Overview",
@@ -95,36 +79,36 @@ const TourismAndTravelGuide = () => {
               width="100%"
               height="100%"
               src="https://www.youtube.com/embed/Z44fFqBQQtg"
-              frameborder="0"
+              frameBorder='0'
               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-              allowfullscreen
+              allowFullScreen
               className="rounded-xl"
             ></iframe>
             <iframe
               width="100%"
               height="100%"
               src="https://www.youtube.com/embed/JLjvEYMBGzQ"
-              frameborder="0"
+              frameBorder='0'
               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-              allowfullscreen
+              allowFullScreen
               className="rounded-xl"
             ></iframe>
             <iframe
               width="100%"
               height="100%"
               src="https://www.youtube.com/embed/v2QvHyOTlo4"
-              frameborder="0"
+              frameBorder='0'
               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-              allowfullscreen
+              allowFullScreen
               className="rounded-xl"
             ></iframe>
             <iframe
               width="100%"
               height="100%"
               src="https://www.youtube.com/embed/1hfrHd3_MMs"
-              frameborder="0"
+              frameBorder='0'
               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-              allowfullscreen
+              allowFullScreen
               className="rounded-xl"
             ></iframe>
           </div>
@@ -198,13 +182,20 @@ const TourismAndTravelGuide = () => {
             </p>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
-            <PackageCard />
-            <PackageCard />
-            <PackageCard />
+            
+            {
+              datas?.map(item => <PackageCard key={item._id} item={item} />)
+            }
           </div>
-          <MButton className="mx-auto block my-10" variant="gradient" size="lg">
-            View All Packages
-          </MButton>
+          <Link to="/packages">
+            <MButton
+              className="mx-auto block my-10"
+              variant="gradient"
+              size="lg"
+            >
+              View All Packages
+            </MButton>
+          </Link>
         </div>
       ),
     },
@@ -226,101 +217,100 @@ const TourismAndTravelGuide = () => {
               <List>
                 <ListItem className="flex justify-between items-center">
                   <div className="flex">
-                  <ListItemPrefix>
-                    <Avatar
-                      variant="circular"
-                      alt="candice"
-                      src="https://docs.material-tailwind.com/img/face-1.jpg"
-                    />
-                  </ListItemPrefix>
-                  <div>
-                    <Typography variant="h6" color="blue-gray">
-                      Tania Andrew
-                    </Typography>
-                    <Typography
-                      variant="small"
-                      color="gray"
-                      className="font-normal"
-                    >
-                      Software Engineer @ Material Tailwind
-                    </Typography>
-                  </div>
-                  </div>
-                  <Button variant="outlined">View Details</Button>
-                </ListItem>
-                <ListItem className="flex justify-between items-center">
-                  <div className="flex">
-                  <ListItemPrefix>
-                    <Avatar
-                      variant="circular"
-                      alt="candice"
-                      src="https://docs.material-tailwind.com/img/face-1.jpg"
-                    />
-                  </ListItemPrefix>
-                  <div>
-                    <Typography variant="h6" color="blue-gray">
-                      Tania Andrew
-                    </Typography>
-                    <Typography
-                      variant="small"
-                      color="gray"
-                      className="font-normal"
-                    >
-                      Software Engineer @ Material Tailwind
-                    </Typography>
-                  </div>
+                    <ListItemPrefix>
+                      <Avatar
+                        variant="circular"
+                        alt="candice"
+                        src="https://docs.material-tailwind.com/img/face-1.jpg"
+                      />
+                    </ListItemPrefix>
+                    <div>
+                      <Typography variant="h6" color="blue-gray">
+                        Tania Andrew
+                      </Typography>
+                      <Typography
+                        variant="small"
+                        color="gray"
+                        className="font-normal"
+                      >
+                        Software Engineer @ Material Tailwind
+                      </Typography>
+                    </div>
                   </div>
                   <Button variant="outlined">View Details</Button>
                 </ListItem>
                 <ListItem className="flex justify-between items-center">
                   <div className="flex">
-                  <ListItemPrefix>
-                    <Avatar
-                      variant="circular"
-                      alt="candice"
-                      src="https://docs.material-tailwind.com/img/face-1.jpg"
-                    />
-                  </ListItemPrefix>
-                  <div>
-                    <Typography variant="h6" color="blue-gray">
-                      Tania Andrew
-                    </Typography>
-                    <Typography
-                      variant="small"
-                      color="gray"
-                      className="font-normal"
-                    >
-                      Software Engineer @ Material Tailwind
-                    </Typography>
-                  </div>
+                    <ListItemPrefix>
+                      <Avatar
+                        variant="circular"
+                        alt="candice"
+                        src="https://docs.material-tailwind.com/img/face-1.jpg"
+                      />
+                    </ListItemPrefix>
+                    <div>
+                      <Typography variant="h6" color="blue-gray">
+                        Tania Andrew
+                      </Typography>
+                      <Typography
+                        variant="small"
+                        color="gray"
+                        className="font-normal"
+                      >
+                        Software Engineer @ Material Tailwind
+                      </Typography>
+                    </div>
                   </div>
                   <Button variant="outlined">View Details</Button>
                 </ListItem>
                 <ListItem className="flex justify-between items-center">
                   <div className="flex">
-                  <ListItemPrefix>
-                    <Avatar
-                      variant="circular"
-                      alt="candice"
-                      src="https://docs.material-tailwind.com/img/face-1.jpg"
-                    />
-                  </ListItemPrefix>
-                  <div>
-                    <Typography variant="h6" color="blue-gray">
-                      Tania Andrew
-                    </Typography>
-                    <Typography
-                      variant="small"
-                      color="gray"
-                      className="font-normal"
-                    >
-                      Software Engineer @ Material Tailwind
-                    </Typography>
-                  </div>
+                    <ListItemPrefix>
+                      <Avatar
+                        variant="circular"
+                        alt="candice"
+                        src="https://docs.material-tailwind.com/img/face-1.jpg"
+                      />
+                    </ListItemPrefix>
+                    <div>
+                      <Typography variant="h6" color="blue-gray">
+                        Tania Andrew
+                      </Typography>
+                      <Typography
+                        variant="small"
+                        color="gray"
+                        className="font-normal"
+                      >
+                        Software Engineer @ Material Tailwind
+                      </Typography>
+                    </div>
                   </div>
                   <Button variant="outlined">View Details</Button>
                 </ListItem>
-                
+                <ListItem className="flex justify-between items-center">
+                  <div className="flex">
+                    <ListItemPrefix>
+                      <Avatar
+                        variant="circular"
+                        alt="candice"
+                        src="https://docs.material-tailwind.com/img/face-1.jpg"
+                      />
+                    </ListItemPrefix>
+                    <div>
+                      <Typography variant="h6" color="blue-gray">
+                        Tania Andrew
+                      </Typography>
+                      <Typography
+                        variant="small"
+                        color="gray"
+                        className="font-normal"
+                      >
+                        Software Engineer @ Material Tailwind
+                      </Typography>
+                    </div>
+                  </div>
+                  <Button variant="outlined">View Details</Button>
+                </ListItem>
               </List>
             </Card>
           </div>
