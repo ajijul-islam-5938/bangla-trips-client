@@ -3,15 +3,14 @@ import {
   Input,
   Option,
   Select,
-  Textarea,
 } from "@material-tailwind/react";
-import { useState } from "react";
 import useAuth from "../../Hooks/useAuth";
 import useAxios from "../../Hooks/useAxios";
 import { useQuery } from "@tanstack/react-query";
+import { useState } from "react";
 
 const BookNow = ({ data }) => {
-
+const [guide,setGuide] = useState("")
   const handleAddPackage = event => {
     event.preventDefault();
     const packageInfo = {
@@ -19,9 +18,10 @@ const BookNow = ({ data }) => {
       price: event.target.price.value,
       email: event.target.email.value.split(","),
       photoUrl: event.target.photoUrl.value,
-      guide: event.target.guide.value,
+      guide: guide,
+      date : event.target.date.value
     };
-    console.log(packageInfo);
+    
   };
 
   const user = useAuth();
@@ -66,16 +66,16 @@ const BookNow = ({ data }) => {
           <Input
             variant="outlined"
             label="Price"
-            name="aboutTour"
+            name="price"
             defaultValue={"$" + data?.price}
             readOnly
           />
           <Input type="date" variant="outlined" label="Date" name="date" />
 
-          <Select label="Select Version" name="guide">
+          <Select onChange={(e)=>setGuide(e)} label="Select Guide" name="guide">
             
             {
-                guides.map(guide => <Option key={guide._id}>{guide.name}</Option>)
+                guides?.map(guide => <Option value={guide.email} key={guide._id}>{guide.name}</Option>)
             }
           </Select>
         </div>

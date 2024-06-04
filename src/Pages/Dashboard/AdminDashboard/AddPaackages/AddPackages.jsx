@@ -1,8 +1,10 @@
 import { Button, Input, Textarea } from "@material-tailwind/react";
 import { useState } from "react";
+import useAxios from "../../../../Hooks/useAxios";
+import Swal from "sweetalert2";
 
 const AddPackages = () => {
-  const [tourDate, setTourDate] = useState("");
+  const {axiosSecure} = useAxios()
 
   const handleAddPackage = event => {
     event.preventDefault();
@@ -17,9 +19,22 @@ const AddPackages = () => {
         { day: 2, activities: event.target.day2.value },
         { day: 3, activities: event.target.day3.value },
       ],
-      tourDate: tourDate,
     };
-    console.log(packageInfo);
+    axiosSecure.post("/package",packageInfo)
+    .then(res => {
+      Swal.fire({
+        icon: "success",
+        title: "Success!!",
+        text: "Package Added",
+      });
+    })
+    .catch(err => {
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: err.message,
+      });
+    });
   };
 
   return (

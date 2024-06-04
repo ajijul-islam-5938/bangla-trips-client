@@ -38,6 +38,7 @@ const SignIN = () => {
         const userInfo = {
           email: res.user.email,
           name: res.user.displayName,
+          photoURL : res.user.photoURL 
         };
 
         axiosPublic.post(`/user`, userInfo);
