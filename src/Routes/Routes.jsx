@@ -21,6 +21,9 @@ import AllPackages from "../Pages/AllPackages/AllPackages";
 import PackageDetails from "../Pages/PackageDetails/PackageDetails";
 import GuideProfile from "../Components/GuideProfile/GuideProfile";
 import MyAssignedTour from "../Pages/Dashboard/TouristDashboard/MyAssignedTour/MyAssignedTour";
+import TourTypePackages from "../Pages/TourTypePackages/TourTypePackages";
+import StoryDetails from "../Pages/StoryDetails/StoryDetails";
+import AllStories from "../Pages/AllStories/AllStories";
 
 const router = createBrowserRouter([
   {
@@ -68,6 +71,21 @@ const router = createBrowserRouter([
             path : "/guide/:id",
             element : <GuideProfile/>,
             loader : ({params})=> fetch(`${import.meta.env.VITE_SERVER_URL}/guide/${params.id}`)
+        }
+        ,{
+            path : "/packages/tour-type/:type",
+            element : <TourTypePackages/>,
+            loader : ({params})=> fetch(`${import.meta.env.VITE_SERVER_URL}/packages/tour-type/${params.type}`)
+        },
+        {
+            path: "/story/:id",
+            element : <StoryDetails/>,
+            loader : ({params})=> fetch(`${import.meta.env.VITE_SERVER_URL}/story/${params.id}`)
+
+        },
+        {
+            path : "/all-stories",
+            element : <AllStories/>
         }
     ]
   },

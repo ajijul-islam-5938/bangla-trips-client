@@ -11,7 +11,33 @@ import "swiper/css/pagination";
 // import required modules
 import { Keyboard, Scrollbar, Navigation, Pagination } from "swiper/modules";
 import TourTypeCard from "../../../Components/TourTypeCard/TourTypeCard";
+import useData from "../../../Hooks/useData";
+import { useQuery } from "@tanstack/react-query";
+import useAxios from "../../../Hooks/useAxios";
+import { useEffect } from "react";
+import { Link } from "react-router-dom";
 const TourType = () => {
+  const { axiosPublic } = useAxios();
+  // const {datas,refetch} = useData({
+  //   route : "/packages"
+  // })
+  const { data: datas } = useQuery({
+    queryKey: ["datas"],
+    queryFn: async () => {
+      const res = await axiosPublic.get("/packages");
+      return res.data;
+    },
+  });
+
+  const type = [];
+
+  datas?.forEach(data => {
+    const tourType = data.tourType;
+    if (!type.includes(tourType)) {
+      type.push(tourType);
+    }
+  });
+
   return (
     <div>
       <SectionTitle title="Tour Type" />
@@ -32,26 +58,14 @@ const TourType = () => {
           }}
           scrollbar={true}
           navigation={true}
-
           modules={[Keyboard, Scrollbar, Navigation, Pagination]}
           className="mySwiper md:w-10/12 mx-auto px-16"
         >
-          <SwiperSlide >
-            <TourTypeCard/>
-          </SwiperSlide>
-          <SwiperSlide >
-            <TourTypeCard/>
-          </SwiperSlide>
-          <SwiperSlide >
-            <TourTypeCard/>
-          </SwiperSlide>
-          <SwiperSlide >
-            <TourTypeCard/>
-          </SwiperSlide>
-          <SwiperSlide >
-            <TourTypeCard/>
-          </SwiperSlide>
-          
+          {type?.map((item, i) => (
+            <SwiperSlide key={i} className="text-black text-xl font-bold ">
+              <TourTypeCard item={item} />
+            </SwiperSlide>
+          ))}
         </Swiper>
       </div>
     </div>

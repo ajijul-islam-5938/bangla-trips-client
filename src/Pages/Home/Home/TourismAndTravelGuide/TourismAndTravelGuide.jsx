@@ -75,7 +75,7 @@ const TourismAndTravelGuide = () => {
       label: "Overview",
       value: "html",
       desc: (
-        <div className="md:w-[70%] mx-auto">
+        <div className="md:w-11/12 mx-auto">
           <div className="md:w-[60%] mx-auto">
             <h1 className="text-2xl text-center my-5">
               Welcome to BanglaTravel Guide
