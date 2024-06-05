@@ -11,15 +11,54 @@ import dolor from "../../assets/dolor.gif";
 import { Link } from "react-router-dom";
 import useAxios from "../../Hooks/useAxios";
 import Swal from "sweetalert2";
+import useAuth from "../../Hooks/useAuth";
 
 export default function PackageCard({ item }) {
+  const user = useAuth()
   const { axiosSecure } = useAxios();
   const handleWish = (id, item) => {
+    
     const wishData = {
-      wishId: id,
+      
+      packageName : item.packageName,
+      price : item.price,
+      gallery : item.gallery,
+      aboutTour : item.aboutTour,
+      tourPlan : item.tourPlan,
+      tourType : item.tourType,
+      packageId : id ,
+      wishEmail : user?.email
     };
 
-    console.log(wishData);
+
+
+//_id": "665dd2a2b55fbc52c6cd8da2",
+//packageName": "Discover Dhaka",
+//price": 200,
+//gallery": [
+//   "https://image.freepik.com/free-photo/scenic-view-lalbagh-fort_181624-27791.jpg",
+//   "https://image.freepik.com/free-photo/view-baitul-mukarram-mosque-dhaka-bangladesh_181624-20337.jpg",
+//   "https://image.freepik.com/free-photo/beautiful-sunset-over-burij-khal-dhaka_181624-23710.jpg"
+//,
+//aboutTour": "Explore the vibrant city of Dhaka with our comprehensive tour. Visit historical landmarks, enjoy local cuisine, and experience the bustling city life.",
+//tourPlan": [
+//   {
+//       "day": 1,
+//       "activities": "Arrival in Dhaka, check-in at the hotel, and visit Lalbagh Fort."
+//   },
+//   {
+//       "day": 2,
+//       "activities": "Explore the National Museum and enjoy a boat ride on the Buriganga River."
+//   },
+//   {
+//       "day": 3,
+//       "activities": "Visit Baitul Mukarram Mosque and shop at the local markets."
+//   }
+//,
+//tourType": "City Tour",
+//wishEmail": "mdshafiulislamsafi2506@gmail.com"
+//
+
     axiosSecure
       .post("/wish-list", wishData)
       .then(res => {
