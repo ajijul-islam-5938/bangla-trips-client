@@ -121,9 +121,9 @@ const MyWishList = () => {
                   >
                     <Button
                       onClick={() => handleDelete(wishList._id, wishList)}
-                      variant="outlined"
+                      variant="gradient"
                       size="sm"
-                      color="deep-orange"
+                      color="red"
                     >
                       delete
                     </Button>

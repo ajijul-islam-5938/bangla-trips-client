@@ -23,7 +23,7 @@ const ManageUsers = () => {
       showCancelButton: true,
       confirmButtonColor: "#3085d6",
       cancelButtonColor: "#d33",
-      confirmButtonText: "Yes, Book it!",
+      confirmButtonText: "Yes, make Admin!",
     }).then(result => {
       if (result.isConfirmed) {
         axiosSecure
@@ -34,6 +34,7 @@ const ManageUsers = () => {
             title: "Success!!",
             text: `${user.name} is now ADMIN`,
           });
+          refetch()
           })
           .catch(err => {
             Swal.fire({
@@ -55,7 +56,7 @@ const ManageUsers = () => {
       showCancelButton: true,
       confirmButtonColor: "#3085d6",
       cancelButtonColor: "#d33",
-      confirmButtonText: "Yes, Book it!",
+      confirmButtonText: "Yes, make Guide!",
     }).then(result => {
       if (result.isConfirmed) {
         axiosSecure
@@ -66,6 +67,7 @@ const ManageUsers = () => {
               title: "Success!!",
               text: `${user.name} is now GUIDE`,
             });
+            refetch()
           })
           .catch(err => {
             Swal.fire({
