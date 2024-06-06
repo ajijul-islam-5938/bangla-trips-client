@@ -1,19 +1,25 @@
-import { Button, Input, Option, } from "@material-tailwind/react";
+import { Button, Input, Option } from "@material-tailwind/react";
 import useAuth from "../../Hooks/useAuth";
 import useAxios from "../../Hooks/useAxios";
 import { useQuery } from "@tanstack/react-query";
 import { useState } from "react";
 import Swal from "sweetalert2";
 import { MenuItem, Select } from "@mui/material";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
+import "react-datepicker/dist/react-datepicker-cssmodules.css";
 
-const BookNow = ({ data,refetch }) => {
+const BookNow = ({ data, refetch }) => {
+  
+  const [startDate, setStartDate] = useState(new Date());
+  console.log(startDate);
   const user = useAuth();
   const { axiosSecure } = useAxios();
 
   const [guide, setGuide] = useState({});
   const handleAddPackage = event => {
     event.preventDefault();
-    refetch()
+    refetch();
     const packageInfo = {
       name: event.target.name.value,
       price: event.target.price.value,
@@ -21,11 +27,10 @@ const BookNow = ({ data,refetch }) => {
       photoUrl: event.target.photoUrl.value,
       guideName: guide.target.value.name,
       guideEmail: guide.target.value.email,
-      date: event.target.date.value,
+      date: startDate,
       package: data,
-      status : "inReview"
+      status: "inReview",
     };
-  
 
     Swal.fire({
       title: "Are you sure?",
@@ -64,6 +69,7 @@ const BookNow = ({ data,refetch }) => {
       return res.data;
     },
   });
+
   return (
     <div className="my-16">
       <h1 className="text-center font-semibold my-5 mx-auto">
@@ -100,11 +106,25 @@ const BookNow = ({ data,refetch }) => {
             defaultValue={"$" + data?.price}
             readOnly
           />
-          <Input type="date" variant="outlined" label="Date" name="date" required/>
-
-          <Select size="small" onChange={e => setGuide(e)} label="Select Guide" name="guide" required>
+          <div className="border-2 rounded-md flex items-center px-5" >
+            <DatePicker
+            dateFormat="dd/MM/YYYY"
+              selected={startDate}
+              onChange={date => setStartDate(date)}
+            />
+          </div>
+          <Select
+            size="small"
+            onChange={e => setGuide(e)}
+            label="Select Guide"
+            name="guide"
+            required
+          >
             {guides?.map(guide => (
-              <MenuItem value={{email : guide.email, name : guide.name}} key={guide._id}>
+              <MenuItem
+                value={{ email: guide.email, name: guide.name }}
+                key={guide._id}
+              >
                 {guide.name}
               </MenuItem>
             ))}
