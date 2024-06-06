@@ -4,6 +4,8 @@ import useAxios from "../../../../Hooks/useAxios";
 import Swal from "sweetalert2";
 import useAuth from "../../../../Hooks/useAuth";
 import { Link } from "react-router-dom";
+import ReactPaginate from "react-paginate";
+import { useState } from "react";
 const TABLE_HEAD = ["Name", "E-mail", "Role", "Actions"];
 
 const MyWishList = () => {
@@ -52,6 +54,19 @@ const MyWishList = () => {
     });
   };
 
+
+  const [itemOffset, setItemOffset] = useState(0);
+  const itemsPerPage = 5;
+
+  const endOffset = itemOffset + itemsPerPage;
+  const currentItems = wishLists?.slice(itemOffset, endOffset);
+  const pageCount = Math.ceil(wishLists?.length / itemsPerPage);
+
+  const handlePageClick = event => {
+    const newOffset = (event.selected * itemsPerPage) % wishLists?.length;
+    setItemOffset(newOffset);
+  };
+
   return (
     <div>
       <h1 className="text-center font-semibold text-2xl my-16">
@@ -78,7 +93,7 @@ const MyWishList = () => {
             </tr>
           </thead>
           <tbody>
-            {wishLists?.map(wishList => (
+            {currentItems?.map(wishList => (
               <tr key={wishList._id} className="even:bg-blue-gray-50/50">
                 <td className="p-4">
                   <Typography
@@ -117,7 +132,7 @@ const MyWishList = () => {
                   <Typography
                     variant="small"
                     color="blue-gray"
-                    className="font-medium flex gap-2 items-center"
+                    className="font-medium flex gap-2 items-center justify-end"
                   >
                     <Button
                       onClick={() => handleDelete(wishList._id, wishList)}
@@ -143,6 +158,32 @@ const MyWishList = () => {
               </tr>
             ))}
           </tbody>
+          <tfoot>
+            <tr>
+              <td colSpan={TABLE_HEAD.length}>
+                <ReactPaginate
+                  nextLabel="Next >"
+                  onPageChange={handlePageClick}
+                  pageRangeDisplayed={3}
+                  marginPagesDisplayed={2}
+                  pageCount={pageCount}
+                  previousLabel="< Previous"
+                  pageClassName="page-item"
+                  pageLinkClassName="page-link"
+                  previousClassName="page-item"
+                  previousLinkClassName="page-link"
+                  nextClassName="page-item"
+                  nextLinkClassName="page-link"
+                  breakLabel="..."
+                  breakClassName="page-item"
+                  breakLinkClassName="page-link"
+                  containerClassName="pagination"
+                  activeClassName="active"
+                  renderOnZeroPageCount={null}
+                />
+              </td>
+            </tr>
+          </tfoot>
         </table>
       </Card>
     </div>

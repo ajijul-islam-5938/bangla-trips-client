@@ -12,7 +12,7 @@ import Swal from "sweetalert2";
 import useAxios from "../../../Hooks/useAxios";
 
 const Sidebar = () => {
-  const isAdmin = useAdmin();
+  const {isAdmin} = useAdmin();
   const user = useAuth();
   const {axiosSecure} = useAxios()
 

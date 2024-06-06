@@ -98,9 +98,9 @@ const BookNow = ({ data,refetch }) => {
             defaultValue={"$" + data?.price}
             readOnly
           />
-          <Input type="date" variant="outlined" label="Date" name="date" />
+          <Input type="date" variant="outlined" label="Date" name="date" required/>
 
-          <Select onChange={e => setGuide(e)} label="Select Guide" name="guide">
+          <Select onChange={e => setGuide(e)} label="Select Guide" name="guide" required>
             {guides?.map(guide => (
               <Option value={{email : guide.email, name : guide.name}} key={guide._id}>
                 {guide.name}

@@ -3,6 +3,8 @@ import { useQuery } from "@tanstack/react-query";
 import useAxios from "../../../../Hooks/useAxios";
 import Swal from "sweetalert2";
 import useAuth from "../../../../Hooks/useAuth";
+import ReactPaginate from "react-paginate";
+import { useState } from "react";
 const TABLE_HEAD = [
   "Package Name",
   "Guide Name",
@@ -89,6 +91,19 @@ const MyAssignedTour = () => {
     });
   };
 
+
+  const [itemOffset, setItemOffset] = useState(0);
+  const itemsPerPage = 5;
+
+  const endOffset = itemOffset + itemsPerPage;
+  const currentItems = assigned?.slice(itemOffset, endOffset);
+  const pageCount = Math.ceil(assigned?.length / itemsPerPage);
+
+  const handlePageClick = event => {
+    const newOffset = (event.selected * itemsPerPage) % assigned?.length;
+    setItemOffset(newOffset);
+  };
+
   return (
     <div>
       <h1 className="text-center font-semibold text-2xl my-16">
@@ -116,7 +131,7 @@ const MyAssignedTour = () => {
             </tr>
           </thead>
           <tbody>
-            {assigned?.map(item => (
+            {currentItems?.map(item => (
               <tr key={item._id} className="even:bg-blue-gray-50/50">
                 <td className="p-4">
                   <Typography
@@ -229,6 +244,32 @@ const MyAssignedTour = () => {
               </tr>
             ))}
           </tbody>
+          <tfoot>
+            <tr>
+              <td colSpan={TABLE_HEAD.length}>
+                <ReactPaginate
+                  nextLabel="Next >"
+                  onPageChange={handlePageClick}
+                  pageRangeDisplayed={3}
+                  marginPagesDisplayed={2}
+                  pageCount={pageCount}
+                  previousLabel="< Previous"
+                  pageClassName="page-item"
+                  pageLinkClassName="page-link"
+                  previousClassName="page-item"
+                  previousLinkClassName="page-link"
+                  nextClassName="page-item"
+                  nextLinkClassName="page-link"
+                  breakLabel="..."
+                  breakClassName="page-item"
+                  breakLinkClassName="page-link"
+                  containerClassName="pagination"
+                  activeClassName="active"
+                  renderOnZeroPageCount={null}
+                />
+              </td>
+            </tr>
+          </tfoot>
         </table>
       </Card>
     </div>

@@ -29,6 +29,7 @@ const MyProfile = () => {
       spotName: event.target.spotName.value,
       tourType: event.target.tourType.value,
       email: user.email,
+      experience: event.target.experience.value,
       photoURL: user.photoURL,
       images: [
         event.target.image1.value,
@@ -106,18 +107,21 @@ const MyProfile = () => {
                 variant="outlined"
                 label="Spot Name"
                 name="spotName"
+                required
               />
               <Input
                 variant="outlined"
                 label="Tour Type"
                 // placeholder="Outlined"
                 name="tourType"
+                required
               />
 
               <Select
                 onChange={e => setGuide(e)}
                 label="Select Guide"
                 name="guide"
+                required
               >
                 {guides?.map(guide => (
                   <Option
@@ -134,10 +138,12 @@ const MyProfile = () => {
                 label="Tour Date"
                 // placeholder="Outlined"
                 name="date"
+                required
               />
               <Input
                 variant="outlined"
                 label="image 1"
+                required
                 // placeholder="Outlined"
                 name="image1"
               />
@@ -146,24 +152,28 @@ const MyProfile = () => {
                 label="Image 2"
                 // placeholder="Outlined"
                 name="image2"
+                required
               />
               <Input
                 variant="outlined"
                 label="Image 3"
                 // placeholder="Outlined"
                 name="image3"
+                required
               />
               <Input
                 variant="outlined"
                 label="Image 4"
                 // placeholder="Outlined"
                 name="image4"
+                required
               />
               <div className="md:col-span-2">
                 <Textarea
                   variant="outlined"
                   label="Share Your Experience"
                   name="experience"
+                  required
                 />
               </div>
             </div>

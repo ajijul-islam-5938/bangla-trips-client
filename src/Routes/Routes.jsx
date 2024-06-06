@@ -24,8 +24,13 @@ import MyAssignedTour from "../Pages/Dashboard/TouristDashboard/MyAssignedTour/M
 import TourTypePackages from "../Pages/TourTypePackages/TourTypePackages";
 import StoryDetails from "../Pages/StoryDetails/StoryDetails";
 import AllStories from "../Pages/AllStories/AllStories";
+import NotFound from "../Pages/NotFound/NotFound";
 
 const router = createBrowserRouter([
+    {
+        path :"*",
+        element : <NotFound/>
+    },
   {
     path: "/",
     element: <Main/>,

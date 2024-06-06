@@ -72,6 +72,7 @@ const SignUp = () => {
             const userInfo = {
               email: Auth.currentUser.email,
               name: Auth.currentUser.displayName,
+              role : "tourist"
             };
 
             axiosPublic.post(`/user`, userInfo);
@@ -115,10 +116,10 @@ const SignUp = () => {
                 </Typography>
               </div>
               <div className="mb-1 flex flex-col gap-6">
-                <Input type="text" label="Name" name="name" />
-                <Input type="email" label="Email" name="email" />
-                <Input type="twxt" label="PhotoURL" name="photoUrl" />
-                <Input type="password" label="Password" name="password" />
+                <Input type="text" label="Name" name="name" required />
+                <Input type="email" label="Email" name="email" required />
+                <Input type="twxt" label="PhotoURL" name="photoUrl" required />
+                <Input type="password" label="Password" name="password" required />
               </div>
               <Checkbox
                 label={

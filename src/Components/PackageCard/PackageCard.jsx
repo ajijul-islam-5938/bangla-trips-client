@@ -77,7 +77,7 @@ export default function PackageCard({ item }) {
       });
   };
   return (
-    <Card className="w-full max-w-[26rem] shadow-lg">
+    <Card className="w-full border-t shadow-lg">
       <CardHeader floated={false} color="blue-gray">
         <img
           src={item.gallery[0]}

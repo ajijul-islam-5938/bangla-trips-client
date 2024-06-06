@@ -96,8 +96,8 @@ const SignIN = () => {
                 </Typography>
               </div>
               <div className="mb-1 flex flex-col gap-6">
-                <Input type="email" label="Email" name="email" />
-                <Input type="password" label="Password" name="password" />
+                <Input type="email" label="Email" name="email" required/>
+                <Input type="password" label="Password" name="password" required/>
               </div>
               <Checkbox
                 label={
