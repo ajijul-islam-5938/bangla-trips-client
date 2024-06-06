@@ -113,7 +113,7 @@ const PackageDetails = () => {
                       color="gray"
                       className="font-normal"
                     >
-                      Software Engineer @ Material Tailwind
+                      {guide.email}
                     </Typography>
                   </div>
                 </div>

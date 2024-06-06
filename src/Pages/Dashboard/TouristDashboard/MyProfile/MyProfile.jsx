@@ -7,16 +7,23 @@ import {
   Input,
   Button,
   Textarea,
-  Select,
-  Option,
 } from "@material-tailwind/react";
 import useAuth from "../../../../Hooks/useAuth";
 import useAxios from "../../../../Hooks/useAxios";
 import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import Swal from "sweetalert2";
+import { MenuItem, Select } from "@mui/material";
 
 const MyProfile = () => {
+  const { data: guides, refetch } = useQuery({
+    queryKey: "guides",
+    queryFn: async () => {
+      const res = await axiosSecure.get("/guides");
+      return res.data;
+    },
+  });
+
   const user = useAuth();
   //   console.log(user);
   const { axiosSecure } = useAxios();
@@ -37,10 +44,12 @@ const MyProfile = () => {
         event.target.image3.value,
         event.target.image4.value,
       ],
-      guideName: guide.name,
+      guideName: guide.target.value.name,
       name: user.displayName,
       date: event.target.date.value,
     };
+
+    console.log(guide.target.value);
 
     Swal.fire({
       title: "Are you sure?",
@@ -71,14 +80,6 @@ const MyProfile = () => {
       }
     });
   };
-
-  const { data: guides, refetch } = useQuery({
-    queryKey: "guides",
-    queryFn: async () => {
-      const res = await axiosSecure.get("/guides");
-      return res.data;
-    },
-  });
   return (
     <div className="my-10">
       <Card className="md:w-10/12 mx-auto">
@@ -116,20 +117,23 @@ const MyProfile = () => {
                 name="tourType"
                 required
               />
-
               <Select
+                label="Guide"
+                labelId="demo-simple-select-label"
+                id="demo-simple-select"
+                size="small"
                 onChange={e => setGuide(e)}
-                label="Select Guide"
-                name="guide"
-                required
+                className="text-black"
               >
                 {guides?.map(guide => (
-                  <Option
+                  <MenuItem
                     value={{ email: guide.email, name: guide.name }}
                     key={guide._id}
+                    required
+                    name={guide}
                   >
                     {guide.name}
-                  </Option>
+                  </MenuItem>
                 ))}
               </Select>
               <Input

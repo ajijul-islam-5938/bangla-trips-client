@@ -1,9 +1,10 @@
-import { Button, Input, Option, Select } from "@material-tailwind/react";
+import { Button, Input, Option, } from "@material-tailwind/react";
 import useAuth from "../../Hooks/useAuth";
 import useAxios from "../../Hooks/useAxios";
 import { useQuery } from "@tanstack/react-query";
 import { useState } from "react";
 import Swal from "sweetalert2";
+import { MenuItem, Select } from "@mui/material";
 
 const BookNow = ({ data,refetch }) => {
   const user = useAuth();
@@ -18,12 +19,13 @@ const BookNow = ({ data,refetch }) => {
       price: event.target.price.value,
       email: event.target.email.value,
       photoUrl: event.target.photoUrl.value,
-      guideName: guide.name,
-      guideEmail: guide.email,
+      guideName: guide.target.value.name,
+      guideEmail: guide.target.value.email,
       date: event.target.date.value,
       package: data,
       status : "inReview"
     };
+  
 
     Swal.fire({
       title: "Are you sure?",
@@ -100,11 +102,11 @@ const BookNow = ({ data,refetch }) => {
           />
           <Input type="date" variant="outlined" label="Date" name="date" required/>
 
-          <Select onChange={e => setGuide(e)} label="Select Guide" name="guide" required>
+          <Select size="small" onChange={e => setGuide(e)} label="Select Guide" name="guide" required>
             {guides?.map(guide => (
-              <Option value={{email : guide.email, name : guide.name}} key={guide._id}>
+              <MenuItem value={{email : guide.email, name : guide.name}} key={guide._id}>
                 {guide.name}
-              </Option>
+              </MenuItem>
             ))}
           </Select>
         </div>
