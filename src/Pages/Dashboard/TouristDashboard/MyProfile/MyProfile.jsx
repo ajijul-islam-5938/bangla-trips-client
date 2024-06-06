@@ -82,8 +82,8 @@ const MyProfile = () => {
   };
   return (
     <div className="my-10">
-      <Card className="md:w-10/12 mx-auto">
-        <CardHeader floated={false} className="h-80 ">
+      <Card className="md:w-10/12 mx-auto border-t shadow-lg">
+        <CardHeader floated={false} className="h-96 flex items-center justify-center border-t ">
           <img
             className="w-80 h-80 mx-auto rounded-full"
             src={user?.photoURL}
@@ -124,6 +124,7 @@ const MyProfile = () => {
                 size="small"
                 onChange={e => setGuide(e)}
                 className="text-black"
+                placeholder="Select Guide"
               >
                 {guides?.map(guide => (
                   <MenuItem
