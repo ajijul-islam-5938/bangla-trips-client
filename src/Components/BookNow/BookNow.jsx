@@ -9,14 +9,25 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import "react-datepicker/dist/react-datepicker-cssmodules.css";
 
-const BookNow = ({ data, refetch }) => {
-  
+import ReactConfetti from "react-confetti";
+
+const BookNow = ({ data }) => {
+  const { data: bookings, refetch } = useQuery({
+    queryKey: ["bookings"],
+    queryFn: async () => {
+      const res = await axiosSecure.get(`/my-bookings?email=${user.email}`);
+      return res.data;
+    },
+  });
+
   const [startDate, setStartDate] = useState(new Date());
-  console.log(startDate);
+
   const user = useAuth();
   const { axiosSecure } = useAxios();
 
   const [guide, setGuide] = useState({});
+  const [discount, setDiscount] = useState(false);
+
   const handleAddPackage = event => {
     event.preventDefault();
     refetch();
@@ -45,11 +56,30 @@ const BookNow = ({ data, refetch }) => {
         axiosSecure
           .post("/booking", packageInfo)
           .then(res => {
+            refetch();
             Swal.fire({
               icon: "success",
               title: "Success!!",
               text: "The Package Booked For You",
             });
+            
+            if (bookings?.length > 3) {
+              setDiscount(true);
+              Swal.fire({
+                icon:"info",
+                title: "You have got Discounts",
+                width: 600,
+                padding: "3em",
+                color: "#716add",
+                background: "#fff url(/images/trees.png)",
+                backdrop: `
+                  rgba(0,0,123,0.4)
+                  url("")
+                  left top
+                  no-repeat
+                `
+              });
+            }
           })
           .catch(err => {
             Swal.fire({
@@ -69,13 +99,14 @@ const BookNow = ({ data, refetch }) => {
       return res.data;
     },
   });
-
+  // const { width, height } = useWindowSize()
   return (
     <div className="my-16">
       <h1 className="text-center font-semibold my-5 mx-auto">
         Give required info for booking
       </h1>
       <form onSubmit={handleAddPackage} className="w-10/12 mx-auto">
+        {discount && <ReactConfetti numberOfPieces={3000} width={window.innerWidth} height={3000} />}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-3 md:my-2">
           <Input
             type="text"
@@ -106,9 +137,9 @@ const BookNow = ({ data, refetch }) => {
             defaultValue={"$" + data?.price}
             readOnly
           />
-          <div className="border-2 rounded-md flex items-center px-5" >
+          <div className="border-2 rounded-md flex items-center px-5">
             <DatePicker
-            dateFormat="dd/MM/YYYY"
+              dateFormat="dd/MM/YYYY"
               selected={startDate}
               onChange={date => setStartDate(date)}
             />

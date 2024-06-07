@@ -143,7 +143,7 @@ const ManageUsers = () => {
       <h1 className="text-center font-semibold text-2xl my-16">Manage Users</h1>
 
       <Card className="h-full w-full md:w-11/12 mx-auto my-16 overflow-x-scroll">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-3 md:gap-0 my-3 items-center ">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-3 md:gap-0 my-3 items-center">
           <div className="relative flex w-full max-w-[24rem]">
             <Input
               type="email"

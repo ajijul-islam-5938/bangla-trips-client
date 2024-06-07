@@ -25,6 +25,7 @@ import TourTypePackages from "../Pages/TourTypePackages/TourTypePackages";
 import StoryDetails from "../Pages/StoryDetails/StoryDetails";
 import AllStories from "../Pages/AllStories/AllStories";
 import NotFound from "../Pages/NotFound/NotFound";
+import GuideRoute from "./GuideRoute/GuideRoute";
 
 const router = createBrowserRouter([
     {
@@ -128,7 +129,7 @@ const router = createBrowserRouter([
         },
         {
             path : "/dashboard/assigned-tour",
-            element : <MyAssignedTour/>
+            element : <GuideRoute><MyAssignedTour/></GuideRoute>
         }
     ]
   }

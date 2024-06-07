@@ -1,19 +1,19 @@
 import { Navigate, useLocation, useNavigate } from "react-router-dom";
 import useAdmin from "../../Hooks/useAdmin";
-import useAuth from "../../Hooks/useAuth";
 import { useContext } from "react";
 import { AuthContext } from "../../Provider/AuthProvider";
+import useGuide from "../../Hooks/useGuide";
 
 
-const AdminRoute = ({children}) => {
+const GuideRoute = ({children}) => {
 const {user,loading} = useContext(AuthContext);
-const {isAdmin,adminLoading} = useAdmin();
+const {isGuide,guideLoading} = useGuide();
 const location = useLocation()
-if(loading){
-    return 
+if(guideLoading || loading){
+    return
 }
 
-if(user && isAdmin){
+if(user && isGuide){
     return children
 }
 
@@ -21,4 +21,4 @@ return <Navigate to="/sign-in" state={location.pathname}/>
 
 };
 
-export default AdminRoute;
+export default GuideRoute;

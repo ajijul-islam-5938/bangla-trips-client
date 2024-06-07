@@ -14,8 +14,10 @@ import {
   FacebookMessengerShareButton,
   FacebookShareButton,
 } from "react-share";
+import useAuth from "../../Hooks/useAuth";
 
 const StoryDetails = () => {
+  const user = useAuth()
   const story = useLoaderData();
   const images = story?.images.map(imagelink => ({imagelink}))
   console.log(images);
@@ -43,14 +45,14 @@ const StoryDetails = () => {
                 </Typography>
                 <div className="5 flex items-center gap-x-3">
                   <p>Share with</p>
-                  <FacebookShareButton
+                  <FacebookShareButton disabled={user ? false : true}
                     url={`${import.meta.env.VITE_SITE_LINK}/story/${
                       story?._id
                     }`}
                   >
                     <FacebookIcon size={40} round />
                   </FacebookShareButton>
-                  <FacebookMessengerShareButton
+                  <FacebookMessengerShareButton disabled={user ? false : true}
                     url={`${import.meta.env.VITE_SITE_LINK}/story/${
                       story?._id
                     }`}

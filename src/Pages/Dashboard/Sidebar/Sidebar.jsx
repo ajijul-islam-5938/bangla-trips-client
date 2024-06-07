@@ -10,14 +10,17 @@ import useAdmin from "../../../Hooks/useAdmin";
 import useAuth from "../../../Hooks/useAuth";
 import Swal from "sweetalert2";
 import useAxios from "../../../Hooks/useAxios";
+import useGuide from "../../../Hooks/useGuide";
+import { useQuery } from "@tanstack/react-query";
+import { useEffect } from "react";
 
 const Sidebar = () => {
-  const {isAdmin} = useAdmin();
+  const { isAdmin } = useAdmin();
+  const { isGuide } = useGuide();
   const user = useAuth();
-  const {axiosSecure} = useAxios()
+  const { axiosSecure } = useAxios();
 
-
-  const handleRequest = ()=>{
+  const handleRequest = () => {
     Swal.fire({
       title: "Are you sure?",
       text: `You want to send Request to be a Guide?`,
@@ -29,13 +32,14 @@ const Sidebar = () => {
     }).then(result => {
       if (result.isConfirmed) {
         axiosSecure
-        .patch(`/user/request/guide?email=${user.email}`)
-        .then(res => {
-          Swal.fire({
-            icon: "success",
-            title: "Success!!",
-            text: `Request sent`,
-          });
+          .patch(`/user/request/guide?email=${user.email}`)
+          .then(res => {
+            Swal.fire({
+              icon: "success",
+              title: "Success!!",
+              text: `Request sent`,
+            });
+            refetch()
           })
           .catch(err => {
             Swal.fire({
@@ -46,13 +50,23 @@ const Sidebar = () => {
           });
       }
     });
-  }
+  };
+
+  const { data: isRequest ,refetch } = useQuery({
+    queryKey: ["isRequest"],
+    queryFn: async () => {
+      const res = await axiosSecure.get(`user/role/${user?.email}`);
+      return res.data;
+    },
+  });
+    useEffect(()=>{  refetch()})
+  console.log(isAdmin);
   return (
     <div>
       <Card className="md:fixed h-full md:h-[calc(100vh-2rem)] w-full md:max-w-[20rem] p-4 shadow-xl shadow-blue-gray-900/5 ">
         <div className="mb-2 p-4">
           <Typography variant="h5" color="blue-gray">
-            Sidebar
+            Dshboard
           </Typography>
         </div>
         <List className="">
@@ -67,7 +81,25 @@ const Sidebar = () => {
               My Profile
             </ListItem>
           </Typography>
-          <Typography
+
+          {isGuide && (
+            <>
+              <Typography
+                as={NavLink}
+                to="/dashboard/assigned-tour"
+                variant="small"
+                // color="blue-gray"
+                className="font-medium"
+              >
+                <ListItem className="flex items-center gap-2 py-2 pr-4">
+                  My Assigned Tours
+                </ListItem>
+              </Typography>
+            </>
+          )}
+          {(!isAdmin && !isGuide) &&(
+            <>
+                      <Typography
             as={NavLink}
             to="/dashboard/my-bookings"
             variant="small"
@@ -78,36 +110,36 @@ const Sidebar = () => {
               My Bookings
             </ListItem>
           </Typography>
-          <Typography
-            as={NavLink}
-            to="/dashboard/my-wishlist"
-            variant="small"
-            // color="blue-gray"
-            className="font-medium"
-          >
-            <ListItem className="flex items-center gap-2 py-2 pr-4">
-              My WishList
-            </ListItem>
-          </Typography>
-          <Typography
-            as={NavLink}
-            to="/dashboard/assigned-tour"
-            variant="small"
-            // color="blue-gray"
-            className="font-medium"
-          >
-            <ListItem className="flex items-center gap-2 py-2 pr-4">
-              My Assigned Tours
-            </ListItem>
-          </Typography>
-          <Typography variant="small" className="font-medium" onClick={handleRequest}>
-            <ListItem className="flex items-center gap-2 py-2 pr-4 text-center">
-              <Button variant="gradient" size="small" color="pink" fullWidth>
-                Request To Admin
-              </Button>
-            </ListItem>
-          </Typography>
-          {isAdmin?.admin && (
+              <Typography
+                as={NavLink}
+                to="/dashboard/my-wishlist"
+                variant="small"
+                // color="blue-gray"
+                className="font-medium"
+              >
+                <ListItem className="flex items-center gap-2 py-2 pr-4">
+                  My WishList
+                </ListItem>
+              </Typography>
+              <Typography variant="small" className="font-medium">
+                <ListItem className="flex items-center gap-2 py-2 pr-4 text-center">
+                  <Button
+                    onClick={handleRequest}
+                    variant="gradient"
+                    size="small"
+                    color="pink"
+                    fullWidth
+                    disabled={isRequest}
+                  >
+                    {isRequest ? "Requested" : "Request To Admin"}
+                  </Button>
+                </ListItem>
+              </Typography>
+              
+            </>
+          )}
+
+          {isAdmin && (
             <>
               <Typography
                 as={NavLink}

@@ -7,6 +7,7 @@ import {
   Input,
   Button,
   Textarea,
+  Chip,
 } from "@material-tailwind/react";
 import useAuth from "../../../../Hooks/useAuth";
 import useAxios from "../../../../Hooks/useAxios";
@@ -15,8 +16,31 @@ import { useQuery } from "@tanstack/react-query";
 import Swal from "sweetalert2";
 import { MenuItem, Select } from "@mui/material";
 
+// Import Swiper React components
+import { Swiper, SwiperSlide } from "swiper/react";
+
+// Import Swiper styles
+import "swiper/css";
+import "swiper/css/free-mode";
+import "swiper/css/pagination";
+
+// import required modules
+import { FreeMode, Pagination } from "swiper/modules";
+import ReviewCard from "../../../../Components/ReviewCard/ReviewCard";
+import SectionTitle from "../../../../Shared/SectionTitle/SectionTitle";
+import useGuide from "../../../../Hooks/useGuide";
+import useAdmin from "../../../../Hooks/useAdmin";
+
 const MyProfile = () => {
-  const { data: guides, refetch } = useQuery({
+  const { isGuide } = useGuide();
+  const { isAdmin } = useAdmin();
+
+  console.log(isAdmin);
+  const user = useAuth();
+  //   console.log(user);
+  const { axiosSecure, axiosPublic } = useAxios();
+
+  const { data: guides } = useQuery({
     queryKey: "guides",
     queryFn: async () => {
       const res = await axiosSecure.get("/guides");
@@ -24,9 +48,13 @@ const MyProfile = () => {
     },
   });
 
-  const user = useAuth();
-  //   console.log(user);
-  const { axiosSecure } = useAxios();
+  const { data: reviews } = useQuery({
+    queryKey: ["reviews"],
+    queryFn: async () => {
+      const res = await axiosPublic.get(`/comments?email=${user?.email}`);
+      return res.data;
+    },
+  });
 
   const [guide, setGuide] = useState({});
 
@@ -80,10 +108,14 @@ const MyProfile = () => {
       }
     });
   };
+
   return (
     <div className="my-10">
       <Card className="md:w-10/12 mx-auto border-t shadow-lg">
-        <CardHeader floated={false} className="h-96 flex items-center justify-center border-t ">
+        <CardHeader
+          floated={false}
+          className="h-96 flex items-center justify-center border-t "
+        >
           <img
             className="w-80 h-80 mx-auto rounded-full"
             src={user?.photoURL}
@@ -96,6 +128,16 @@ const MyProfile = () => {
           </Typography>
           <Typography color="blue-gray" className="font-medium" textGradient>
             Email : {user?.email}
+          </Typography>
+          <Typography color="blue-gray" className="font-lg" textGradient>
+            {isAdmin || isGuide &&
+              <Chip
+                variant="ghost"
+                color="green"
+                value={isAdmin && "Admin" || isGuide && "Guide" }
+                className="inline-block"
+              />
+            }
           </Typography>
         </CardBody>
         <CardFooter className="">
@@ -178,7 +220,7 @@ const MyProfile = () => {
                   variant="outlined"
                   label="Share Your Experience"
                   name="experience"
-                  required
+                  required={true}
                 />
               </div>
             </div>
@@ -194,6 +236,28 @@ const MyProfile = () => {
           </form>
         </CardFooter>
       </Card>
+      {isGuide && (
+        <div className="my-10 w-11/12 mx-auto">
+          <div className="my-10">
+            <SectionTitle title="Tourist Revies About You" />
+          </div>
+          <Swiper
+            freeMode={true}
+            centeredSlides={true}
+            pagination={{
+              clickable: true,
+            }}
+            modules={[FreeMode, Pagination]}
+            className="mySwiper py-20"
+          >
+            {reviews?.map(review => (
+              <SwiperSlide key={review._id}>
+                <ReviewCard review={review} />
+              </SwiperSlide>
+            ))}
+          </Swiper>
+        </div>
+      )}
     </div>
   );
 };

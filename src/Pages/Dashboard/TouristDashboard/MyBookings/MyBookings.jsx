@@ -24,7 +24,6 @@ const ManageUsers = () => {
       return res.data;
     },
   });
-  console.log(bookings);
   const handleCancel = (_id, booking) => {
     Swal.fire({
       title: "Are you sure?",

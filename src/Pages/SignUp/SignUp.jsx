@@ -34,7 +34,8 @@ const SignUp = () => {
         const userInfo = {
           email: res.user.email,
           name: res.user.displayName,
-          photoURL : res.user.photoURL 
+          photoURL: res.user.photoURL,
+          role: "tourist",
         };
 
         axiosPublic.post(`/user`, userInfo);
@@ -72,7 +73,8 @@ const SignUp = () => {
             const userInfo = {
               email: Auth.currentUser.email,
               name: Auth.currentUser.displayName,
-              role : "tourist"
+              photoURL: res.user.photoURL,
+              role: "tourist",
             };
 
             axiosPublic.post(`/user`, userInfo);
@@ -119,7 +121,12 @@ const SignUp = () => {
                 <Input type="text" label="Name" name="name" required />
                 <Input type="email" label="Email" name="email" required />
                 <Input type="twxt" label="PhotoURL" name="photoUrl" required />
-                <Input type="password" label="Password" name="password" required />
+                <Input
+                  type="password"
+                  label="Password"
+                  name="password"
+                  required
+                />
               </div>
               <Checkbox
                 label={
