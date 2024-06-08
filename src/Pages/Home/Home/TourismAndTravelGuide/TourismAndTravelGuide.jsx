@@ -25,6 +25,7 @@ import useData from "../../../../Hooks/useData";
 import { useQuery } from "@tanstack/react-query";
 import useAxios from "../../../../Hooks/useAxios";
 import { ListItemAvatar, ListItemButton, ListItemText } from "@mui/material";
+import { motion } from "framer-motion";
 
 const steps = [
   {
@@ -86,7 +87,8 @@ const TourismAndTravelGuide = () => {
               experienced tour guides all in one place.
             </p>
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-5 my-16">
+          <motion.div       initial={{ opacity: 0, translateY: +100 }}
+      whileInView={{ opacity: 1, translateY: 0 }} className="grid grid-cols-1 md:grid-cols-4 gap-5 my-16">
             <iframe
               width="100%"
               height="100%"
@@ -123,7 +125,7 @@ const TourismAndTravelGuide = () => {
               allowFullScreen
               className="rounded-xl"
             ></iframe>
-          </div>
+          </motion.div>
           <div className="my-16">
             <h1 className="text-xl">How It Works</h1>
 
@@ -252,7 +254,9 @@ const TourismAndTravelGuide = () => {
                         </Typography>
                       </div>
                     </div>
-                    <Link to={`/guide/${guide._id}`}><Button variant="outlined">View Details</Button></Link>
+                    <Link to={`/guide/${guide._id}`}>
+                      <Button variant="outlined">View Details</Button>
+                    </Link>
                   </ListItem>
                 ))}
               </List>
@@ -264,7 +268,10 @@ const TourismAndTravelGuide = () => {
   ];
 
   return (
-    <div className="my-32">
+    <div
+
+      className="my-32"
+    >
       <SectionTitle title="Tourism And Travel Guides" />
       <div className="my-16">
         <Tabs id="custom-animation" value="html">

@@ -15,16 +15,17 @@ const TABLE_HEAD = ["Name", "E-mail", "Role", "Actions"];
 
 const ManageUsers = () => {
   const { axiosSecure } = useAxios();
+  const [route,setRoute] = useState("/users")
 
-  // const { data: users, refetch } = useQuery({
-  //   queryKey: ["users"],
-  //   queryFn: async () => {
-  //     const res = await axiosSecure.get("/users");
-  //     return res.data;
-  //   },
-  // });
+  const { data: users, refetch } = useQuery({
+    queryKey: ["users"],
+    queryFn: async () => {
+      const res = await axiosSecure.get(`${route}`);
+      return res.data;
+    },
+  });
 
-  const [users, setUsers] = useState([]);
+  // const [users, setUsers] = useState([]);
 
   const handleAdmin = (_id, user) => {
     Swal.fire({
@@ -37,23 +38,23 @@ const ManageUsers = () => {
       confirmButtonText: "Yes, make Admin!",
     }).then(result => {
       if (result.isConfirmed) {
-        axiosSecure
-          .patch(`/user/admin/${_id}`)
-          .then(res => {
-            Swal.fire({
-              icon: "success",
-              title: "Success!!",
-              text: `${user.name} is now ADMIN`,
-            });
-            refetch();
-          })
-          .catch(err => {
-            Swal.fire({
-              icon: "error",
-              title: "Oops...",
-              text: err.message,
-            });
-          });
+        // axiosSecure
+        //   .patch(`/user/admin/${_id}`)
+        //   .then(res => {
+        //     Swal.fire({
+        //       icon: "success",
+        //       title: "Success!!",
+        //       text: `${user.name} is now ADMIN`,
+        //     });
+        //   })
+        //   .catch(err => {
+        //     Swal.fire({
+        //       icon: "error",
+        //       title: "Oops...",
+        //       text: err.message,
+        //     });
+        //   });
+        setRoute(`/user/admin/${_id}`)
       }
     });
   };
@@ -69,23 +70,23 @@ const ManageUsers = () => {
       confirmButtonText: "Yes, make Guide!",
     }).then(result => {
       if (result.isConfirmed) {
-        axiosSecure
-          .patch(`/user/guide/${_id}`)
-          .then(res => {
-            Swal.fire({
-              icon: "success",
-              title: "Success!!",
-              text: `${user.name} is now GUIDE`,
-            });
-            refetch();
-          })
-          .catch(err => {
-            Swal.fire({
-              icon: "error",
-              title: "Oops...",
-              text: err.message,
-            });
-          });
+        // axiosSecure
+        //   .patch(`/user/guide/${_id}`)
+        //   .then(res => {
+        //     Swal.fire({
+        //       icon: "success",
+        //       title: "Success!!",
+        //       text: `${user.name} is now GUIDE`,
+        //     });
+        //   })
+        //   .catch(err => {
+        //     Swal.fire({
+        //       icon: "error",
+        //       title: "Oops...",
+        //       text: err.message,
+        //     });
+        //   });
+        setRoute(`/user/guide/${_id}`)
       }
     });
   };
@@ -97,10 +98,6 @@ const ManageUsers = () => {
   const currentItems = users?.slice(itemOffset, endOffset);
   const pageCount = Math.ceil(users?.length / itemsPerPage);
 
-  useEffect(() => {
-    axiosSecure.get("/users").then(res => setUsers(res.data));
-  }, []);
-
   const handlePageClick = event => {
     const newOffset = (event.selected * itemsPerPage) % users?.length;
     setItemOffset(newOffset);
@@ -110,19 +107,10 @@ const ManageUsers = () => {
   const onChange = ({ target }) => setText(target.value);
 
   const handleSearch = () => {
-    axiosSecure.get(`/users/${text}`).then(res => setUsers(res.data));
+    setRoute(`/users/${text}`)
+    refetch()
   };
 
-  // const roleDatas = users?.map(user => ({ role: user.role }));
-
-  // const roles = [];
-
-  // roleDatas?.forEach(role => {
-  //   const matched = role.role;
-  //   if (!roles.some(r => r.value === matched)) {
-  //     roles.push({ value: role.role, label: role.role, name : role.role });
-  //   }
-  // });
 
   const options = [
     { value: "admin", label: "admin" },
@@ -131,12 +119,16 @@ const ManageUsers = () => {
   ];
 
   const handleFilter = e => {
-    axiosSecure.get(`/users/filter/${e.value}`).then(res => setUsers(res.data));
+    setRoute(`/users/filter/${e.value}`)
+    refetch()
   };
 
   const handleReset = () => {
-    axiosSecure.get("/users").then(res => setUsers(res.data));
+    setRoute("/users")
+    refetch()
   };
+
+  useEffect(()=>{refetch()})
 
   return (
     <div>
