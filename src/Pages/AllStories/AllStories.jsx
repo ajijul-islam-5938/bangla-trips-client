@@ -22,7 +22,7 @@ const AllStories = () => {
       <SectionTitle title="All Tourist Stories" />
       <div className="grid grid-cols-1 md:grid-cols-3 gap-5 my-8">
         {stories?.map(story => (
-          <motion.StoryCard
+          <StoryCard
             key={story._id}
             initial={{ opacity: 0, translateX: -1000 }}
             whileInView={{ opacity: 1, translateX: 0 }}

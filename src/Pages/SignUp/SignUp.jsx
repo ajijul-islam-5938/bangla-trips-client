@@ -18,7 +18,7 @@ import Auth from "../../firebase.config";
 import useAxios from "../../Hooks/useAxios";
 
 const SignUp = () => {
-  const { axiosPublic } = useAxios();
+  const {axiosSecure} = useAxios();
   const { googleLogin, createUserWithEmailPassword, user } =
     useContext(AuthContext);
 
@@ -32,13 +32,13 @@ const SignUp = () => {
         });
 
         const userInfo = {
-          email: res.user.email,
-          name: res.user.displayName,
-          photoURL: res.user.photoURL,
+          email: Auth.currentUser.email,
+          name: Auth.currentUser.displayName,
+          photoURL: Auth.currentUser.photoURL,
           role: "tourist",
         };
 
-        axiosPublic.post(`/user`, userInfo);
+        axiosSecure.post(`/user`, userInfo);
       })
       .catch(err => {
         // console.log(err);
@@ -73,11 +73,11 @@ const SignUp = () => {
             const userInfo = {
               email: Auth.currentUser.email,
               name: Auth.currentUser.displayName,
-              photoURL: res.user.photoURL,
+              photoURL: Auth.currentUser.photoURL,
               role: "tourist",
             };
 
-            axiosPublic.post(`/user`, userInfo);
+            axiosSecure.post(`/user`, userInfo);
           })
           .catch(err => {
             Swal.fire({

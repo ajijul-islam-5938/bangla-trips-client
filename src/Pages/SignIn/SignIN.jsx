@@ -15,6 +15,7 @@ import { AuthContext } from "../../Provider/AuthProvider";
 import Swal from "sweetalert2";
 import useAxios from "../../Hooks/useAxios";
 import useAuth from "../../Hooks/useAuth";
+import Auth from "../../firebase.config";
 
 const SignIN = () => {
 
@@ -23,7 +24,7 @@ const SignIN = () => {
   const state = locationn.state;
   const navigate = useNavigate();
 
-  const { axiosPublic } = useAxios();
+  const { axiosSecure } = useAxios();
   const user = useAuth();
 
   const handleGoogleLogin = () => {
@@ -36,12 +37,13 @@ const SignIN = () => {
         });
 
         const userInfo = {
-          email: res.user.email,
-          name: res.user.displayName,
-          photoURL : res.user.photoURL 
+          email: Auth.currentUser.email,
+          name: Auth.currentUser.displayName,
+          photoURL: Auth.currentUser.photoURL,
+          role: "tourist",
         };
 
-        axiosPublic.post(`/user`, userInfo);
+        axiosSecure.post(`/user`, userInfo);
 
         navigate(state ? state : "/")
       })

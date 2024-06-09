@@ -5,6 +5,9 @@ const Blogs = () => {
     return (
         <div className='my-28'>
         <SectionTitle title={"Bolgs page"}/>
+        <div>
+            
+        </div>
     </div>
     );
 };

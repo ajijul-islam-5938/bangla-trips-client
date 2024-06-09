@@ -38,23 +38,25 @@ const ManageUsers = () => {
       confirmButtonText: "Yes, make Admin!",
     }).then(result => {
       if (result.isConfirmed) {
-        // axiosSecure
-        //   .patch(`/user/admin/${_id}`)
-        //   .then(res => {
-        //     Swal.fire({
-        //       icon: "success",
-        //       title: "Success!!",
-        //       text: `${user.name} is now ADMIN`,
-        //     });
-        //   })
-        //   .catch(err => {
-        //     Swal.fire({
-        //       icon: "error",
-        //       title: "Oops...",
-        //       text: err.message,
-        //     });
-        //   });
-        setRoute(`/user/admin/${_id}`)
+        axiosSecure
+          .patch(`/user/admin/${_id}`)
+          .then(res => {
+            Swal.fire({
+              icon: "success",
+              title: "Success!!",
+              text: `${user.name} is now ADMIN`,
+            });
+          refetch()
+
+          })
+          .catch(err => {
+            Swal.fire({
+              icon: "error",
+              title: "Oops...",
+              text: err.message,
+            });
+          });
+        // setRoute(`/user/admin/${_id}`)
       }
     });
   };
@@ -70,23 +72,25 @@ const ManageUsers = () => {
       confirmButtonText: "Yes, make Guide!",
     }).then(result => {
       if (result.isConfirmed) {
-        // axiosSecure
-        //   .patch(`/user/guide/${_id}`)
-        //   .then(res => {
-        //     Swal.fire({
-        //       icon: "success",
-        //       title: "Success!!",
-        //       text: `${user.name} is now GUIDE`,
-        //     });
-        //   })
-        //   .catch(err => {
-        //     Swal.fire({
-        //       icon: "error",
-        //       title: "Oops...",
-        //       text: err.message,
-        //     });
-        //   });
-        setRoute(`/user/guide/${_id}`)
+        axiosSecure
+          .patch(`/user/guide/${_id}`)
+          .then(res => {
+            Swal.fire({
+              icon: "success",
+              title: "Success!!",
+              text: `${user.name} is now GUIDE`,
+            });
+          refetch()
+
+          })
+          .catch(err => {
+            Swal.fire({
+              icon: "error",
+              title: "Oops...",
+              text: err.message,
+            });
+          });
+        // setRoute(`/user/guide/${_id}`)
       }
     });
   };

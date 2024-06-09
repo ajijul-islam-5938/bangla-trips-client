@@ -130,111 +130,163 @@ const MyProfile = () => {
             Email : {user?.email}
           </Typography>
           <Typography color="blue-gray" className="font-lg" textGradient>
-            {isAdmin || isGuide &&
+            {isAdmin && (
               <Chip
                 variant="ghost"
                 color="green"
-                value={isAdmin && "Admin" || isGuide && "Guide" }
-                className="inline-block"
+                value="Admin"
+                className="inline-block my-2"
               />
-            }
+            )}
+            {isGuide && (
+              <Chip
+                variant="ghost"
+                color="green"
+                value="Guide"
+                className="inline-block my-2"
+              />
+            )}
+            {!isGuide && !isAdmin && (
+              <Chip
+                variant="ghost"
+                color="green"
+                value="Tourist"
+                className="inline-block my-2"
+              />
+            )}
           </Typography>
         </CardBody>
-        <CardFooter className="">
-          <h1 className="text-center font-semibold my-5 mx-auto">
-            Add your Own Story
-          </h1>
-          <form onSubmit={handleStory} className="">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-3 md:my-2">
-              <Input
-                variant="outlined"
-                label="Spot Name"
-                name="spotName"
-                required
-              />
-              <Input
-                variant="outlined"
-                label="Tour Type"
-                // placeholder="Outlined"
-                name="tourType"
-                required
-              />
-              <Select
-                label="Guide"
-                labelId="demo-simple-select-label"
-                id="demo-simple-select"
-                size="small"
-                onChange={e => setGuide(e)}
-                className="text-black"
-                placeholder="Select Guide"
-              >
-                {guides?.map(guide => (
-                  <MenuItem
-                    value={{ email: guide.email, name: guide.name }}
-                    key={guide._id}
-                    required
-                    name={guide}
-                  >
-                    {guide.name}
-                  </MenuItem>
-                ))}
-              </Select>
-              <Input
-                type="date"
-                variant="outlined"
-                label="Tour Date"
-                // placeholder="Outlined"
-                name="date"
-                required
-              />
-              <Input
-                variant="outlined"
-                label="image 1"
-                required
-                // placeholder="Outlined"
-                name="image1"
-              />
-              <Input
-                variant="outlined"
-                label="Image 2"
-                // placeholder="Outlined"
-                name="image2"
-                required
-              />
-              <Input
-                variant="outlined"
-                label="Image 3"
-                // placeholder="Outlined"
-                name="image3"
-                required
-              />
-              <Input
-                variant="outlined"
-                label="Image 4"
-                // placeholder="Outlined"
-                name="image4"
-                required
-              />
-              <div className="md:col-span-2">
-                <Textarea
+        {!isAdmin && !isGuide && (
+          <CardFooter className="">
+            <h1 className="text-center font-semibold my-5 mx-auto">
+              Add your Own Story
+            </h1>
+            <form onSubmit={handleStory} className="">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-3 md:my-2">
+                <Input
                   variant="outlined"
-                  label="Share Your Experience"
-                  name="experience"
-                  required={true}
+                  label="Spot Name"
+                  name="spotName"
+                  required
                 />
+                <Input
+                  variant="outlined"
+                  label="Tour Type"
+                  // placeholder="Outlined"
+                  name="tourType"
+                  required
+                />
+                <Select
+                  label="Guide"
+                  labelId="demo-simple-select-label"
+                  id="demo-simple-select"
+                  size="small"
+                  onChange={e => setGuide(e)}
+                  className="text-black"
+                  placeholder="Select Guide"
+                >
+                  {guides?.map(guide => (
+                    <MenuItem
+                      value={{ email: guide.email, name: guide.name }}
+                      key={guide._id}
+                      required
+                      name={guide}
+                    >
+                      {guide.name}
+                    </MenuItem>
+                  ))}
+                </Select>
+                <Input
+                  type="date"
+                  variant="outlined"
+                  label="Tour Date"
+                  // placeholder="Outlined"
+                  name="date"
+                  required
+                />
+                <Input
+                  variant="outlined"
+                  label="image 1"
+                  required
+                  // placeholder="Outlined"
+                  name="image1"
+                />
+                <Input
+                  variant="outlined"
+                  label="Image 2"
+                  // placeholder="Outlined"
+                  name="image2"
+                  required
+                />
+                <Input
+                  variant="outlined"
+                  label="Image 3"
+                  // placeholder="Outlined"
+                  name="image3"
+                  required
+                />
+                <Input
+                  variant="outlined"
+                  label="Image 4"
+                  // placeholder="Outlined"
+                  name="image4"
+                  required
+                />
+                <div className="md:col-span-2">
+                  <Textarea
+                    variant="outlined"
+                    label="Share Your Experience"
+                    name="experience"
+                    required={true}
+                  />
+                </div>
               </div>
-            </div>
-            <Button
-              type="submit"
-              variant="gradient"
-              color="red"
-              className="bg-red-500"
-              fullWidth
-            >
-              Add Story
-            </Button>
-          </form>
-        </CardFooter>
+              <Button
+                type="submit"
+                variant="gradient"
+                color="red"
+                className="bg-red-500"
+                fullWidth
+              >
+                Add Story
+              </Button>
+            </form>
+          </CardFooter>
+        )}
+        {isGuide && (
+          <CardFooter className="">
+            <h1 className="text-center font-semibold my-5 mx-auto">
+              Add your Profile
+            </h1>
+            <form onSubmit={handleStory} className="">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-3 md:my-2">
+                <Input
+                  variant="outlined"
+                  label="Spot Name"
+                  name="spotName"
+                  required
+                />
+                <Input
+                  variant="outlined"
+                  label="Tour Type"
+                  // placeholder="Outlined"
+                  name="tourType"
+                  required
+                />
+                
+              </div>
+              <Button
+                type="submit"
+                variant="gradient"
+                color="red"
+                className="bg-red-500"
+                fullWidth
+              >
+                Add Story
+              </Button>
+            </form>
+          </CardFooter>
+        )}
       </Card>
       {isGuide && (
         <div className="my-10 w-11/12 mx-auto">
