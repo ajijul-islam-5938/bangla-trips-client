@@ -5,6 +5,29 @@
 * #####  Name : Bangla Trips
 * ##### [Live Site Link Click here to visit](https://assignment-12-819b8.web.app)
 
+### ⚙️Used Technologies:
+<p align="left">
+  <a>
+    <img width="200" src="https://skillicons.dev/icons?i=react,firebase,mongo,express,tailwind,materialui &perline=6" />
+  </a>
+</p>
+
+# how to run this site locally
+
+- step 1
+   ```
+   $ git clone https://github.com/ajijul-islam-5938/bangla-trips-client.git
+   ```
+- step 2
+   ```
+   $ npm npm install
+   ```
+- step 3
+    - solve server side env variables
+- step 4
+  ```
+  $ npm run dev
+  ```
 # Features
 * ##### __User-Friendly Interface :__ Easy navigation with a clean and intuitive layout.
 * ##### __Destination Highlights :__  Showcases key travel destinations in Bangladesh.
