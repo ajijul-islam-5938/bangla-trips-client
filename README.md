@@ -20,7 +20,7 @@
    ```
 - step 2
    ```
-   $ npm npm install
+   $ npm install
    ```
 - step 3
     - solve server side env variables
